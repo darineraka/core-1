@@ -145,4 +145,14 @@ class RendererTest extends PHPUnit_Framework_TestCase {
         $r->renderString('{{');
     }
 
+    public function testRendererDoesNotEscapeByDefault()
+    {
+        $r = $this->getRenderer();
+
+        $testString = '<script></script><html></html>';
+
+        $r->setData('test', $testString);
+        $this->assertEquals($testString, $r->renderString('{{ test }}'));
+    }
+
 }
