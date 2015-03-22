@@ -33,3 +33,24 @@ if (!function_exists('load_system_template'))
         return null;
     }
 }
+
+if (!function_exists('load_core_template'))
+{
+    /**
+     * Get the contents of a core template by name.
+     *
+     * @param $templateName
+     * @return null|string
+     */
+    function load_core_template($templateName)
+    {
+        $templateFile = base_path().'/templates/system/core/'.$templateName;
+
+        if (file_exists($templateFile))
+        {
+            return file_get_contents($templateFile);
+        }
+
+        return null;
+    }
+}

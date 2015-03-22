@@ -145,6 +145,15 @@ class RendererTest extends PHPUnit_Framework_TestCase {
         $r->renderString('{{');
     }
 
+    /**
+     * @expectedException \NewUp\Templates\Renderers\InvalidSyntaxException
+     */
+    public function testRendererThrowsSyntaxErrorExceptionWhenFilterDoesNotExist()
+    {
+        $r = $this->getRenderer();
+        $r->renderString('{{ ""|bad_filter_name }}');
+    }
+
     public function testRendererDoesNotEscapeByDefault()
     {
         $r = $this->getRenderer();
@@ -153,6 +162,26 @@ class RendererTest extends PHPUnit_Framework_TestCase {
 
         $r->setData('test', $testString);
         $this->assertEquals($testString, $r->renderString('{{ test }}'));
+    }
+
+    public function testTemplatesCanUseInheritence()
+    {
+        $r = $this->getRendererWithTestTemplates();
+        $value = $r->render('Test_Child');
+        $this->assertEquals('This is a base template.', $value);
+    }
+
+    public function testTemplatesCanUseInheritenceBlocks()
+    {
+        $r = $this->getRendererWithTestTemplates();
+        $value = $r->render('Test_Block_Child');
+        $this->assertStringEqualsFile(__DIR__ . '/Templates/Test_Block_Child_Expected', $value);
+    }
+
+    public function testTemplatesCanIncludeSystemTemplates()
+    {
+        $r = $this->getRendererWithTestTemplates();
+        $this->assertEquals(load_core_template('newup_notice'), $r->render('Test_Core_Include'));
     }
 
 }
