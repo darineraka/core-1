@@ -27,16 +27,28 @@ class TemplateRenderer implements Renderer {
 
     public function __construct()
     {
-        $this->twigFileLoader   = new \Twig_Loader_Filesystem(core_templates_path());
+        $this->twigFileLoader   = new \Twig_Loader_Filesystem();
         $this->twigSystemLoader = new \Twig_Loader_Array([
                                                              'template' => load_system_template('TemplateClass')
                                                          ]);
 
         $this->twigEnvironment       =
             new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader]), $this->environmentOptions);
-        $this->twigStringEnvironment = new \Twig_Environment(new \Twig_Loader_String(), $this->environmentOptions);
+        $this->twigStringEnvironment = new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader, new \Twig_Loader_String()]), $this->environmentOptions);
 
         $this->registerFilters();
+        $this->registerCorePaths();
+
+    }
+
+    /**
+     * Registers the core system paths.
+     *
+     * @throws InvalidPathException
+     */
+    private function registerCorePaths()
+    {
+        $this->addPath(core_templates_path());
     }
 
     /**
