@@ -16,6 +16,15 @@ class TemplateRenderer implements Renderer {
 
     protected $dataArray = [];
 
+    /**
+     * The Twig environment options.
+     *
+     * @var array
+     */
+    protected $environmentOptions = [
+        'autoescape' => false
+    ];
+
     public function __construct()
     {
         $this->twigFileLoader   = new \Twig_Loader_Filesystem(core_templates_path());
@@ -24,8 +33,9 @@ class TemplateRenderer implements Renderer {
                                                          ]);
 
         $this->twigEnvironment       =
-            new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader]));
-        $this->twigStringEnvironment = new \Twig_Environment(new \Twig_Loader_String());
+            new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader]), $this->environmentOptions);
+        $this->twigStringEnvironment = new \Twig_Environment(new \Twig_Loader_String(), $this->environmentOptions);
+
         $this->registerFilters();
     }
 
@@ -130,6 +140,8 @@ class TemplateRenderer implements Renderer {
      * @return string
      * @throws InvalidTemplateException
      * @throws InvalidSyntaxException
+     * @throws RuntimeException
+     * @throws SecurityException
      */
     public function render($templateName)
     {
@@ -137,13 +149,21 @@ class TemplateRenderer implements Renderer {
         {
             return $this->twigEnvironment->render($templateName, $this->getData());
         }
+        catch (SecurityException $e)
+        {
+            throw new SecurityException($e->getMessage(), $e->getCode(), $e);
+        }
+        catch (\Twig_Error_Runtime $e)
+        {
+            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
         catch (\Twig_Error_Syntax $e)
         {
-            throw new InvalidSyntaxException($e->getMessage());
+            throw new InvalidSyntaxException($e->getMessage(), $e->getCode(), $e);
         }
         catch (\Twig_Error_Loader $e)
         {
-            throw new InvalidTemplateException($e->getMessage());
+            throw new InvalidTemplateException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -152,7 +172,10 @@ class TemplateRenderer implements Renderer {
      *
      * @param $templateString
      * @return string
+     * @throws InvalidTemplateException
      * @throws InvalidSyntaxException
+     * @throws RuntimeException
+     * @throws SecurityException
      */
     public function renderString($templateString)
     {
@@ -160,9 +183,21 @@ class TemplateRenderer implements Renderer {
         {
             return $this->twigStringEnvironment->render($templateString, $this->getData());
         }
+        catch (SecurityException $e)
+        {
+            throw new SecurityException($e->getMessage(), $e->getCode(), $e);
+        }
+        catch (\Twig_Error_Runtime $e)
+        {
+            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
         catch (\Twig_Error_Syntax $e)
         {
-            throw new InvalidSyntaxException($e->getMessage());
+            throw new InvalidSyntaxException($e->getMessage(), $e->getCode(), $e);
+        }
+        catch (\Twig_Error_Loader $e)
+        {
+            throw new InvalidTemplateException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
