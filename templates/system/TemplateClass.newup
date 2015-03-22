@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * {{ package|studly }} Template Processor
+ *
+ * {{ description }}
+ *
+ * This file contains additional processing instructions for building the {{ package|studly }} package template.
+ *
+ * @package {{ package }}
+ * @license {{ license }}
+ */
+class {{ package|studly }}Template {
+
+    /**
+     * An array containing all the information the package template requires to build.
+     *
+     * @return array
+     */
+    public function gatherInformation()
+    {
+        return [
+            'v1' => [
+
+            ]
+        ];
+    }
+
+    /**
+     * An array of the possible variations included with the template.
+     *
+     * @return array
+     */
+    public function variations()
+    {
+        return [
+            'v1' => ['v1', 'The main variation description']
+        ];
+    }
+
+    /**
+     * An array of templates that should be built before the current template.
+     *
+     * @return array
+     */
+    public function loadTemplatesBeforeBuild()
+    {
+        return [];
+    }
+
+    /**
+     * An array of templates that should be built after the current template.
+     *
+     * @return array
+     */
+    public function loadTemplatesAfterBuild()
+    {
+        return [];
+    }
+
+    /**
+     * An array of tasks that should be performed before the template is built.
+     *
+     * @return array
+     */
+    public function performTasksBeforeBuild()
+    {
+        return [];
+    }
+
+
+    /**
+     * An array of tasks that should be performed after the template is built.
+     *
+     * @return array
+     */
+    public function performTasksAfterBuild()
+    {
+        return [];
+    }
+
+}
