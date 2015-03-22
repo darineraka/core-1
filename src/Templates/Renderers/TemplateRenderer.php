@@ -6,14 +6,45 @@ use NewUp\Foundation\Application;
 
 class TemplateRenderer implements Renderer {
 
+    /**
+     * Twig file system loader instance.
+     *
+     * @var null|\Twig_Loader_Filesystem
+     */
     protected $twigFileLoader = null;
 
+    /**
+     * Twig array loader.
+     *
+     * Holds system templates (they are given a custom name).
+     *
+     * @var null|\Twig_Loader_Array
+     */
     protected $twigSystemLoader = null;
 
+    /**
+     * The Twig environment instance.
+     *
+     * Used by the `render()` function.
+     *
+     * @var null|\Twig_Environment
+     */
     protected $twigEnvironment = null;
 
+    /**
+     * The Twig environment instance.
+     *
+     * Used by the `renderString()` function.
+     *
+     * @var null|\Twig_Environment
+     */
     protected $twigStringEnvironment = null;
 
+    /**
+     * Renderer environment variables.
+     *
+     * @var array
+     */
     protected $dataArray = [];
 
     /**
@@ -25,6 +56,9 @@ class TemplateRenderer implements Renderer {
         'autoescape' => false
     ];
 
+    /**
+     * Returns a new instance of TemplateRenderer
+     */
     public function __construct()
     {
         $this->twigFileLoader   = new \Twig_Loader_Filesystem();
