@@ -67,12 +67,14 @@ class TemplateRenderer implements Renderer {
                                                          ]);
 
         $this->twigEnvironment       =
-            new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader]), $this->environmentOptions);
-        $this->twigStringEnvironment = new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader, new \Twig_Loader_String()]), $this->environmentOptions);
+            new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader]),
+                                  $this->environmentOptions);
+        $this->twigStringEnvironment =
+            new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader,
+                                                          new \Twig_Loader_String()]), $this->environmentOptions);
 
         $this->registerFilters();
         $this->registerCorePaths();
-
     }
 
     /**
