@@ -11,6 +11,13 @@ interface Renderer {
     public function addPath($path);
 
     /**
+     * Gets the paths of the rendering environment.
+     *
+     * @return mixed
+     */
+    public function getPaths();
+
+    /**
      * Gets the data array that the environment is using.
      *
      * @return array
