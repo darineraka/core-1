@@ -1,7 +1,7 @@
 <?php namespace NewUp\Templates\Renderers;
 
-use NewUp\Contracts\Filter as FilterContract;
-use NewUp\Contracts\Renderer;
+use NewUp\Contracts\Templates\Filter as FilterContract;
+use NewUp\Contracts\Templates\Renderer;
 use NewUp\Foundation\Application;
 
 class TemplateRenderer implements Renderer {

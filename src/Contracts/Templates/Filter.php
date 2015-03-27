@@ -1,4 +1,4 @@
-<?php namespace NewUp\Contracts;
+<?php namespace NewUp\Contracts\Templates;
 
 interface Filter {
 
