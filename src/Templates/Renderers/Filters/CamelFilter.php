@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Str;
 
-class Singular extends Filter {
+class CamelFilter extends Filter {
 
-    protected $name = 'singular';
+    protected $name = 'camel';
 
     public function getOperator()
     {
         return function ($string)
         {
-            return Str::singular($string);
+            return Str::camel($string);
         };
     }
 

@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Str;
 
-class Snake extends Filter {
+class SnakeFilter extends Filter {
 
     protected $name = 'snake';
 
     public function getOperator()
     {
-        return function ($string)
+        return function ($string, $delimiter = '_')
         {
-            return Str::snake($string);
+            return Str::snake($string, $delimiter);
         };
     }
 

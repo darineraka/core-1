@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Str;
 
-class Studly extends Filter {
+class UpperFilter extends Filter {
 
-    protected $name = 'studly';
+    protected $name = 'upper';
 
     public function getOperator()
     {
         return function ($string)
         {
-            return Str::studly($string);
+            return Str::upper($string);
         };
     }
 

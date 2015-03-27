@@ -1,6 +1,6 @@
 <?php namespace NewUp\Templates\Renderers\Filters;
 
-use NewUp\Contracts\Filter as FilterContract;
+use NewUp\Contracts\Templates\Filter as FilterContract;
 
 abstract class Filter implements FilterContract {
 

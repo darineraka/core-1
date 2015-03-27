@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Str;
 
-class Slug extends Filter {
+class LowerFilter extends Filter {
 
-    protected $name = 'slug';
+    protected $name = 'lower';
 
     public function getOperator()
     {
         return function ($string)
         {
-            return Str::slug($string);
+            return Str::lower($string);
         };
     }
 

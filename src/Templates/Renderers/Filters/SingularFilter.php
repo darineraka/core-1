@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Str;
 
-class Plural extends Filter {
+class SingularFilter extends Filter {
 
-    protected $name = 'plural';
+    protected $name = 'singular';
 
     public function getOperator()
     {
         return function ($string)
         {
-            return Str::plural($string);
+            return Str::singular($string);
         };
     }
 
