@@ -1,6 +1,7 @@
 {
   "name": "newup/core",
   "description": "PHP Package Generator",
+  "license": "MIT",
   "require": {
     "laravel/framework": "5.*",
     "twig/twig": "~1.0"
