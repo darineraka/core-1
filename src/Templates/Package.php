@@ -186,15 +186,15 @@ class Package implements PackageContract, PackageFactory {
     }
 
     /**
-     * Returns a new package instance from the provided details.
+     * Returns a new package instance from the provided array.
      *
-     * @param array $details
+     * @param array $array
      * @return PackageContract
      * @throws \InvalidArgumentException
      */
-    public static function fromDetails(array $details)
+    public static function fromArray(array $array)
     {
-        $details            = (object)$details;
+        $details            = (object)$array;
         $packageNameDetails = self::parseVendorAndPackage(object_get($details, 'name', null));
 
         $description = object_get($details, 'description', null);
@@ -225,7 +225,7 @@ class Package implements PackageContract, PackageFactory {
      */
     public static function fromFile($path)
     {
-        return self::fromDetails(json_decode(file_get_contents($path), true));
+        return self::fromArray(json_decode(file_get_contents($path), true));
     }
 
     /**

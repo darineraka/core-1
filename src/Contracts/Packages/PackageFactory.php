@@ -3,12 +3,12 @@
 interface PackageFactory {
 
     /**
-     * Returns a new package instance from the provided details.
+     * Returns a new package instance from the provided an array.
      *
-     * @param array $details
+     * @param array $array
      * @return Package
      */
-    public static function fromDetails(array $details);
+    public static function fromArray(array $array);
 
     /**
      * Returns a new package instance from the provided file.

@@ -17,14 +17,14 @@ class PackageTest extends PHPUnit_Framework_TestCase {
         ];
     }
 
-    private function getPackageFromDetails()
+    private function getPackageFromArray()
     {
-        return Package::fromDetails($this->getPackageDetails());
+        return Package::fromArray($this->getPackageDetails());
     }
 
-    public function testPackageLoadsFromDetails()
+    public function testPackageLoadsFromArray()
     {
-        $package = $this->getPackageFromDetails();
+        $package = $this->getPackageFromArray();
         $this->assertInstanceOf('NewUp\Contracts\Packages\Package', $package);
     }
 
@@ -46,7 +46,7 @@ class PackageTest extends PHPUnit_Framework_TestCase {
 
     public function testPackageSetsDataCorrectly()
     {
-        $package = $this->getPackageFromDetails();
+        $package = $this->getPackageFromArray();
         $this->assertEquals($package->getVendor(), 'vendor');
         $this->assertEquals($package->getPackage(), 'package');
         $this->assertEquals($package->getDescription(), $this->getPackageDetails()['description']);
@@ -56,13 +56,13 @@ class PackageTest extends PHPUnit_Framework_TestCase {
 
     public function testPackageGetNameReturnsCorrectFormat()
     {
-        $package = $this->getPackageFromDetails();
+        $package = $this->getPackageFromArray();
         $this->assertEquals('vendor/package', $package->getName());
     }
 
     public function testPackageConvertsAuthorsIntoObjects()
     {
-        $package = $this->getPackageFromDetails();
+        $package = $this->getPackageFromArray();
         $packageAuthors = $package->getAuthors();
         $authors = $this->getPackageDetails()['authors'];
 
@@ -76,8 +76,8 @@ class PackageTest extends PHPUnit_Framework_TestCase {
 
     public function testPackageExportsCorrectJSONStructure()
     {
-        $package = $this->getPackageFromDetails();
-        $this->assertEquals($package, Package::fromDetails(json_decode($package->toJson(), true)));
+        $package = $this->getPackageFromArray();
+        $this->assertEquals($package, Package::fromArray(json_decode($package->toJson(), true)));
     }
 
 }
