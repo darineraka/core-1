@@ -2,6 +2,11 @@
   "name": "newup/core",
   "description": "PHP Package Generator",
   "license": "MIT",
+  "homepage": "http://newup.io",
+  "support": {
+    "issues": "https://github.com/newup/core/issues",
+    "source": "https://github.com/newup/core"
+  },
   "require": {
     "laravel/framework": "5.*",
     "twig/twig": "~1.0"
