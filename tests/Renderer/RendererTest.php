@@ -1,24 +1,8 @@
-<?php
+<?php namespace NewUp\Tests\Renderer;
 
 use NewUp\Foundation\Application;
-use NewUp\Templates\Renderers\TemplateRenderer;
 
-class RendererTest extends PHPUnit_Framework_TestCase {
-
-    public function getRenderer()
-    {
-        $renderer = new TemplateRenderer();
-
-        return $renderer;
-    }
-
-    public function getRendererWithTestTemplates()
-    {
-        $r = $this->getRenderer();
-        $r->addPath(__DIR__ . '/Templates/');
-
-        return $r;
-    }
+class RendererTest extends RenderTestBase {
 
     public function testSystemCorePathIsAvailableByDefault()
     {
@@ -82,19 +66,6 @@ class RendererTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('Not affected.', $r->render('Test_Simple'));
     }
 
-    public function testDefaultFiltersWork()
-    {
-        $r = $this->getRendererWithTestTemplates();
-        $this->assertEquals('fooBar', $r->render('Test_Filter_Camel'));
-        $this->assertEquals('foobar', $r->render('Test_Filter_Lower'));
-        $this->assertEquals('cars', $r->render('Test_Filter_Plural'));
-        $this->assertEquals('car', $r->render('Test_Filter_Singular'));
-        $this->assertEquals('this-is-a-slug', $r->render('Test_Filter_Slug'));
-        $this->assertEquals('foo_bar', $r->render('Test_Filter_Snake'));
-        $this->assertEquals('FooBar', $r->render('Test_Filter_Studly'));
-        $this->assertEquals('FOOBAR', $r->render('Test_Filter_Upper'));
-    }
-
     public function testDataIsPassedToTemplates()
     {
         $r = $this->getRendererWithTestTemplates();
@@ -143,15 +114,6 @@ class RendererTest extends PHPUnit_Framework_TestCase {
     {
         $r = $this->getRenderer();
         $r->renderString('{{');
-    }
-
-    /**
-     * @expectedException \NewUp\Templates\Renderers\InvalidSyntaxException
-     */
-    public function testRendererThrowsSyntaxErrorExceptionWhenFilterDoesNotExist()
-    {
-        $r = $this->getRenderer();
-        $r->renderString('{{ ""|bad_filter_name }}');
     }
 
     public function testRendererDoesNotEscapeByDefault()
