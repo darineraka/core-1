@@ -1,5 +1,5 @@
 {
-  "name": "newup/newup",
+  "name": "newup/core",
   "description": "PHP Package Generator",
   "require": {
     "laravel/framework": "5.*",
