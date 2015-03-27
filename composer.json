@@ -7,6 +7,12 @@
     "issues": "https://github.com/newup/core/issues",
     "source": "https://github.com/newup/core"
   },
+  "authors": [
+    {
+      "name": "Johnathon Koster",
+      "email": "john@stillat.com"
+    }
+  ],
   "require": {
     "laravel/framework": "5.*",
     "twig/twig": "~1.0"
