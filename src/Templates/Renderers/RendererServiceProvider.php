@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 
 class RendererServiceProvider extends ServiceProvider {
+
     /**
      * Register the service provider.
      *
