@@ -5,9 +5,7 @@ use NewUp\Contracts\Templates\Renderer;
 
 class FileSystemPathNameParser implements PathNameParser {
 
-    const ESCAPE_OPEN_CURLY_BRACKET  = '//ESCAPE_OPEN_CURLY_BRACKET//';
-
-    const ESCAPE_CLOSE_CURLY_BRACKET = '//ESCAPE_CLOSE_CURLY_BRACKET//';
+    const ESCAPE_DOUBLE_OPEN_BRACKET = '//ESCAPE_OPEN_SQUARE_BRACKET//';
 
     /**
      * The Renderer instance.
@@ -22,6 +20,20 @@ class FileSystemPathNameParser implements PathNameParser {
      * @var array
      */
     protected $charactersToRemove = [];
+
+    /**
+     * The "standard" environment lexer.
+     *
+     * @var \Twig_Lexer
+     */
+    protected $originalTwigLexer = null;
+
+    /**
+     * The directory/pathname lexer.
+     *
+     * @var \Twig_Lexer
+     */
+    protected $pathLexer = null;
 
     public function __construct(Renderer $templateRenderer)
     {
@@ -71,29 +83,75 @@ class FileSystemPathNameParser implements PathNameParser {
     }
 
     /**
-     * Converts the sequence of double opening and closing curly brackets to the escape strings.
+     * Replaces all occurrences of '[[' with an arbitrary escape sequence.
      *
      * @param $string
-     * @return string
+     * @return mixed
      */
-    private function escapeOpenCurlyBracket($string)
+    private function replaceDoubleOpeningBrackets($string)
     {
-        $string = str_replace('{{', self::ESCAPE_OPEN_CURLY_BRACKET, $string);
-        $string = str_replace('}}', self::ESCAPE_CLOSE_CURLY_BRACKET, $string);
-        return $string;
+        return str_replace('[[', self::ESCAPE_DOUBLE_OPEN_BRACKET, $string);
     }
 
     /**
-     * Converts the curly bracket escape strings into the single opening and closing curly bracket equivalents.
+     * Replaces all occurrences of the opening bracket escape sequence with a single opening square bracket.
      *
      * @param $string
-     * @return string
+     * @return mixed
      */
-    private function unEscapeOpenCurlyBracket($string)
+    private function replaceBracketEscapeSequenceWithSingleOpeningBrackets($string)
     {
-        $string = str_replace(self::ESCAPE_OPEN_CURLY_BRACKET, '{', $string);
-        $string = str_replace(self::ESCAPE_CLOSE_CURLY_BRACKET, '}', $string);
-        return $string;
+        return str_replace(self::ESCAPE_DOUBLE_OPEN_BRACKET, '[', $string);
+    }
+
+    /**
+     * Replaces all occurrences of '[' with '|'.
+     *
+     * @param $string
+     * @return mixed
+     */
+    private function convertSingleOpeningSquareBracketsToPipes($string)
+    {
+        return str_replace('[', '|', $string);
+    }
+
+    /**
+     * Makes a new Twig Lexer just for the path name stuff.
+     *
+     * It should be assumed that 'FileSystemPathNameParser' and 'TemplateRenderer' are friendly classes.
+     *
+     */
+    private function constructPathNameLexer()
+    {
+        if ($this->originalTwigLexer == null)
+        {
+            $this->originalTwigLexer = $this->templateRenderer->getStringEnvironment()->getLexer();
+        }
+
+        if ($this->pathLexer == null)
+        {
+            $this->pathLexer = new \Twig_Lexer($this->templateRenderer->getStringEnvironment(), [
+                'tag_comment'   => ['{#', '#}'],
+                'tag_block'     => ['{%', '%}'],
+                'tag_variable'  => ['{', '}']
+            ]);
+        }
+
+        // Set the lexer.
+        $this->templateRenderer->getStringEnvironment()->setLexer($this->pathLexer);
+    }
+
+    /**
+     * Restores the original Twig lexer.
+     *
+     * It should be assumed that 'FileSystemPathNameParser' and 'TemplateRenderer' are friendly classes.
+     */
+    private function restoreOriginalLexer()
+    {
+        if ($this->originalTwigLexer != null)
+        {
+            $this->templateRenderer->getStringEnvironment()->setLexer($this->originalTwigLexer);
+        }
     }
 
     /**
@@ -104,9 +162,12 @@ class FileSystemPathNameParser implements PathNameParser {
      */
     public function processPath($path)
     {
-        $path = $this->escapeOpenCurlyBracket($path);
-
-        $path = $this->unEscapeOpenCurlyBracket($path);
+        $path = $this->replaceDoubleOpeningBrackets($path);
+        $path = $this->convertSingleOpeningSquareBracketsToPipes($path);
+        $path = $this->replaceBracketEscapeSequenceWithSingleOpeningBrackets($path);
+        $this->constructPathNameLexer();
+        $path = $this->templateRenderer->renderString($path);
+        $this->restoreOriginalLexer();
         $path = $this->removeUnwantedCharactersFromString($path);
         return $path;
     }
