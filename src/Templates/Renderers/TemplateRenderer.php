@@ -157,6 +157,16 @@ class TemplateRenderer implements Renderer {
     }
 
     /**
+     * Returns the underlying Twig environment used by renderString().
+     *
+     * @return null|\Twig_Environment
+     */
+    public function getStringEnvironment()
+    {
+        return $this->twigStringEnvironment;
+    }
+
+    /**
      * Gets the environment data.
      *
      * @return array
