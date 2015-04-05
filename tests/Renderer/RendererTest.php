@@ -17,10 +17,10 @@ class RendererTest extends RenderTestBase {
     {
         $r = $this->getRenderer();
 
-        $r->addPath(__DIR__ . '/../../templates');
+        $r->addPath(storage_path().'/templates');
         $this->assertCount(2, $r->getPaths());
 
-        $r->addPath(__DIR__ . '/../../templates/store');
+        $r->addPath(storage_path().'/templates/store');
         $this->assertCount(3, $r->getPaths());
     }
 
