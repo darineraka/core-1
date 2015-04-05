@@ -1,11 +1,24 @@
 <?php
 
 return [
+
     'timezone'  => 'America/Chicago',
+
     'debug'     => true,
 
     'providers' => [
+        /**
+         * Relevant Laravel framework service providers.
+         */
+        'Illuminate\Bus\BusServiceProvider',
+        'Illuminate\Encryption\EncryptionServiceProvider',
         'Illuminate\Filesystem\FilesystemServiceProvider',
+        'Illuminate\Pipeline\PipelineServiceProvider',
+        'Illuminate\Validation\ValidationServiceProvider',
+
+        /**
+         * NewUp specific service providers.
+         */
         'NewUp\Templates\Renderers\RendererServiceProvider',
         'NewUp\Templates\Parsers\PathNameParserServiceProvider',
     ],
