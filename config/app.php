@@ -2,7 +2,7 @@
 
 return [
 
-    'timezone'  => 'America/Chicago',
+    'timezone'  => 'UTC',
 
     'debug'     => true,
 
