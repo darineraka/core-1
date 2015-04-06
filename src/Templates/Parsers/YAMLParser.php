@@ -44,6 +44,12 @@ class YAMLParser {
         return $this->parseString(file_get_contents($fileLocation));
     }
 
+    /**
+     * Recursively trims all string values in an array.
+     *
+     * @param  $array
+     * @return array
+     */
     private function trimArray(&$array)
     {
         foreach ($array as $key => $value)
