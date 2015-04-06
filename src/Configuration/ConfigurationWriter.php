@@ -1,6 +1,7 @@
 <?php namespace NewUp\Configuration;
 
 use Illuminate\Support\Collection;
+use NewUp\Templates\Parsers\YAMLParser;
 
 class ConfigurationWriter extends Collection {
 
@@ -17,6 +18,12 @@ class ConfigurationWriter extends Collection {
     public function save($fileName)
     {
         file_put_contents($fileName, $this->toJson(JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+    }
+
+    public function saveYaml($fileName)
+    {
+        $yamlParser = new YAMLParser;
+        file_put_contents($fileName, $yamlParser->toYaml($this->all()));
     }
 
 }
