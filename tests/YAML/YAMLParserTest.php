@@ -10,6 +10,7 @@ foo: bar
 bar:
     foo: bar
     bar: baz
+
 YAML;
 
     private $expectedValueFromYamlString = [
@@ -64,6 +65,12 @@ YAML;
         $secondValue = $r->renderString($parsedValue['ServiceProvider2.php']);
         $this->assertEquals('TestStuff', $secondValue);
 
+    }
+
+    public function testParserCreatesYamlFromArray()
+    {
+        $p = $this->getParser();
+        $this->assertEquals(file_get_contents(__DIR__.'/array_to_yaml.yaml'), $p->toYaml($this->expectedValueFromYamlString));
     }
 
 }

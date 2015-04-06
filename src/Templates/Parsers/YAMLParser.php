@@ -1,6 +1,7 @@
 <?php namespace NewUp\Templates\Parsers;
 
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Yaml;
 
 class YAMLParser {
 
@@ -93,6 +94,23 @@ class YAMLParser {
         }
 
         return $value;
+    }
+
+    /**
+     * Converts a PHP value to YAML.
+     *
+     * @param mixed $input                  The PHP value
+     * @param int   $inline                 The level where you switch to inline YAML
+     * @param int   $indent                 The level of indentation (used internally)
+     * @param bool  $exceptionOnInvalidType true if an exception must be thrown on invalid types (a PHP resource or
+     *                                      object), false otherwise
+     * @param bool  $objectSupport          true if object support is enabled, false otherwise
+     *
+     * @return string The YAML representation of the PHP value
+     */
+    public function toYaml($input, $inline = 2, $indent = 4, $exceptionOnInvalidType = false, $objectSupport = false)
+    {
+        return Yaml::dump($input, $inline, $indent, $exceptionOnInvalidType, $objectSupport);
     }
 
 }
