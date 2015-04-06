@@ -1,5 +1,6 @@
 <?php namespace NewUp\Templates\Renderers;
 
+use NewUp\Contracts\DataCollectorInterface;
 use NewUp\Contracts\Templates\Filter as FilterContract;
 use NewUp\Contracts\Templates\Renderer;
 use NewUp\Foundation\Application;
@@ -55,6 +56,13 @@ class TemplateRenderer implements Renderer {
     protected $environmentOptions = [
         'autoescape' => false
     ];
+
+    /**
+     * An array of data collectors.
+     *
+     * @var array
+     */
+    protected $dataCollectors = [];
 
     /**
      * Returns a new instance of TemplateRenderer
@@ -256,6 +264,43 @@ class TemplateRenderer implements Renderer {
         {
             throw new InvalidTemplateException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * Adds a data collector to the list of data collectors.
+     *
+     * @param DataCollectorInterface $collector
+     */
+    public function addCollector(DataCollectorInterface $collector)
+    {
+        $this->dataCollectors[] = $collector;
+    }
+
+    /**
+     * Gets the list of data collectors.
+     *
+     * @return array
+     */
+    public function getCollectors()
+    {
+        return $this->dataCollectors;
+    }
+
+    /**
+     * Collects all data from data collectors.
+     *
+     * @return array
+     */
+    public function collectData()
+    {
+        $collectedData = [];
+
+        foreach ($this->dataCollectors as $collector)
+        {
+            $collectedData = $collectedData + $collector->collect();
+        }
+
+        return $collectedData;
     }
 
 
