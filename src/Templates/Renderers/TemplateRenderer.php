@@ -175,7 +175,6 @@ class TemplateRenderer implements Renderer {
     {
         $systemInformation                  = [];
         $systemInformation['newup_version'] = Application::VERSION;
-        $systemInformation['newup_test']    = 'test-here';
 
         return $this->dataArray + $systemInformation;
     }
