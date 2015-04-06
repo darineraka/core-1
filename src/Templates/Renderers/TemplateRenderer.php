@@ -82,6 +82,7 @@ class TemplateRenderer implements Renderer {
                                                           new \Twig_Loader_String()]), $this->environmentOptions);
 
         $this->registerFilters();
+        $this->registerFunctions();
         $this->registerCorePaths();
     }
 
@@ -113,6 +114,32 @@ class TemplateRenderer implements Renderer {
                                                                                $filter->getOperator()));
             }
         }
+    }
+
+    private function registerFunctions()
+    {
+        $this->twigEnvironment->addFunction($this->getCorePathNameFunction());
+        $this->twigStringEnvironment->addFunction($this->getCorePathNameFunction());
+    }
+
+    private function getCorePathNameFunction()
+    {
+        return new \Twig_SimpleFunction('path', function($pathName) {
+
+            $data = $this->getData();
+
+            if (array_key_exists('sys_pathNames', $data))
+            {
+                if (array_key_exists($pathName, $data['sys_pathNames']))
+                {
+                    return $this->renderString($data['sys_pathNames'][$pathName]);
+                }
+
+                return '';
+            }
+
+            return '';
+        });
     }
 
     /**
@@ -184,7 +211,7 @@ class TemplateRenderer implements Renderer {
         $systemInformation                  = [];
         $systemInformation['newup_version'] = Application::VERSION;
 
-        return $this->dataArray + $systemInformation;
+        return $this->dataArray + $systemInformation + $this->collectData();
     }
 
     /**
