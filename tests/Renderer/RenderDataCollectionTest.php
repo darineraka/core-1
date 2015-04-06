@@ -38,6 +38,14 @@ class RenderCollectionTest extends RenderTestBase {
         $this->assertArrayHasKey('sys_pathNames', $collectedData);
     }
 
+    public function testRenderMergesCollectorDataWithEnvironmentData()
+    {
+        $r = $this->getRenderer();
+        $r->addCollector(new DummyCollector());
+        $data = $r->getData();
+        $this->assertArrayHasKey('dummy', $data);
+    }
+
     /**
      * @expectedException ErrorException
      */
