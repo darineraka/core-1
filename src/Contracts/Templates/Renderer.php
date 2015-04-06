@@ -1,5 +1,7 @@
 <?php namespace NewUp\Contracts\Templates;
 
+use NewUp\Contracts\DataCollectorInterface;
+
 interface Renderer {
 
     /**
@@ -50,5 +52,26 @@ interface Renderer {
      * @return string
      */
     public function renderString($string);
+
+    /**
+     * Adds a data collector to the list of data collectors.
+     *
+     * @param DataCollectorInterface $collector
+     */
+    public function addCollector(DataCollectorInterface $collector);
+
+    /**
+     * Gets the list of data collectors.
+     *
+     * @return array
+     */
+    public function getCollectors();
+
+    /**
+     * Collects all data from data collectors.
+     *
+     * @return array
+     */
+    public function collectData();
 
 }
