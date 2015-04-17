@@ -1,6 +1,6 @@
 <?php namespace NewUp\Contracts;
 
-interface DataCollectorInterface {
+interface DataCollector {
 
     /**
      * Returns an array of data that should be merged with the rendering environment.

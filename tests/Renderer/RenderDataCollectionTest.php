@@ -1,6 +1,6 @@
 <?php namespace NewUp\Tests\Renderer;
 
-use NewUp\Contracts\DataCollectorInterface;
+use NewUp\Contracts\DataCollector;
 use NewUp\Templates\Renderers\Collectors\FileNameCollector;
 
 class RenderCollectionTest extends RenderTestBase {
@@ -57,7 +57,7 @@ class RenderCollectionTest extends RenderTestBase {
 
 }
 
-class DummyCollector implements DataCollectorInterface {
+class DummyCollector implements DataCollector {
 
     /**
      * Returns an array of data that should be merged with the rendering environment.

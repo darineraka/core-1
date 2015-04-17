@@ -1,6 +1,6 @@
 <?php namespace NewUp\Templates\Renderers;
 
-use NewUp\Contracts\DataCollectorInterface;
+use NewUp\Contracts\DataCollector;
 use NewUp\Contracts\Templates\Filter as FilterContract;
 use NewUp\Contracts\Templates\Renderer;
 use NewUp\Foundation\Application;
@@ -296,9 +296,9 @@ class TemplateRenderer implements Renderer {
     /**
      * Adds a data collector to the list of data collectors.
      *
-     * @param DataCollectorInterface $collector
+     * @param DataCollector $collector
      */
-    public function addCollector(DataCollectorInterface $collector)
+    public function addCollector(DataCollector $collector)
     {
         $this->dataCollectors[] = $collector;
     }

@@ -1,8 +1,8 @@
 <?php namespace NewUp\Templates\Renderers\Collectors;
 
-use NewUp\Contracts\DataCollectorInterface;
+use NewUp\Contracts\DataCollector;
 
-class FileNameCollector implements DataCollectorInterface {
+class FileNameCollector implements DataCollector {
 
     protected $fileNames = [];
 
