@@ -31,6 +31,5 @@ class FileSystemTreeGeneratorTest extends \PHPUnit_Framework_TestCase {
 
         // Just test the keys, as the directory separators are normalized.
         $this->assertEquals(['second', 'first.php'], array_keys($g->getPaths()));
-
     }
 }

@@ -15,7 +15,7 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase {
      */
     private $vfs;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->vfs = vfsStream::setup('fst');
     }
@@ -23,14 +23,14 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase {
     private function getGenerator()
     {
         $fileSystem = new Filesystem;
-        $generator = new FileSystemTreeGenerator($fileSystem);
+        $generator  = new FileSystemTreeGenerator($fileSystem);
 
         $generator->addPaths([
-                                 'someKey' => ['path' => 'some/file.txt', 'type' => 'file'],
+                                 'someKey'    => ['path' => 'some/file.txt', 'type' => 'file'],
                                  'anotherKey' => ['path' => 'some/nested/file.txt', 'type' => 'file'],
-                                 'thirdKey' => ['path' => 'some/dir', 'type' => 'dir'],
-                                 'fourthKey' => ['path' => 'root.txt', 'type' => 'file'],
-                                 'ignore' => ['path' => '.gitignore', 'type' => 'file'],
+                                 'thirdKey'   => ['path' => 'some/dir', 'type' => 'dir'],
+                                 'fourthKey'  => ['path' => 'root.txt', 'type' => 'file'],
+                                 'ignore'     => ['path' => '.gitignore', 'type' => 'file'],
                              ]);
 
         return $generator;
@@ -44,12 +44,34 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase {
 
         // These are the directories and files that should be created.
         $testChildren = [
-          'some', 'some/file.txt', 'some/nested', 'some/dir', 'some/nested/file.txt', '.gitignore', 'root.txt'
+            'some', 'some/file.txt', 'some/nested', 'some/dir', 'some/nested/file.txt', '.gitignore', 'root.txt'
         ];
 
         foreach ($testChildren as $child)
         {
             $this->assertTrue($this->vfs->hasChild($child));
+        }
+
+    }
+
+    public function testFileSystemTreeGeneratorReturnsAnArrayOfTheFilesCreated()
+    {
+        $g     = $this->getGenerator();
+        $paths = $g->generate(vfsStream::url('fst'));
+
+        $this->assertCount(5, $paths);
+
+        foreach (['ignore', 'fourthKey', 'thirdKey', 'anotherKey', 'someKey'] as $key)
+        {
+            $this->assertArrayHasKey($key, $paths);
+        }
+
+        foreach ($paths as $path)
+        {
+            foreach(['path', 'type', 'full'] as $pathPart)
+            {
+                $this->assertArrayHasKey($pathPart, $path);
+            }
         }
 
     }
