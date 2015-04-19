@@ -98,8 +98,8 @@ class FileSystemTreeGenerator implements FileTreeGenerator {
     /**
      * Creates the file tree in the given directory.
      *
-     * @param $destinationDirectory
-     * @return mixed
+     * @param  $destinationDirectory
+     * @return array
      */
     public function generate($destinationDirectory)
     {
