@@ -3,6 +3,15 @@
 use Illuminate\Filesystem\Filesystem;
 use NewUp\Contracts\IO\FileTreeGenerator;
 
+/**
+ * Class FileSystemTreeGenerator
+ *
+ * This generator is used to create the actual directory structure of the
+ * generated package. It will also create empty files that will act as
+ * placeholders for additional steps.
+ *
+ * @package NewUp\Templates\Generators
+ */
 class FileSystemTreeGenerator implements FileTreeGenerator {
 
     /**
