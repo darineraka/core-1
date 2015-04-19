@@ -18,7 +18,7 @@ class PathTreeArrayFormatTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException NewUp\Exceptions\InvalidArgumentException
+     * @expectedException \NewUp\Exceptions\InvalidArgumentException
      */
     public function testPathTreeArrayTraitThrowsExceptionWithInvalidKeys()
     {
