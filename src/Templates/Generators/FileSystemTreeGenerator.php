@@ -39,17 +39,27 @@ class FileSystemTreeGenerator implements FileTreeGenerator {
     }
 
     /**
+     * Normalizes the use of '/' and '\' in a path.
+     *
+     * @param  $path
+     * @return string
+     */
+    private function normalizePath($path)
+    {
+        $newPath = str_replace('/', DIRECTORY_SEPARATOR, $path);
+        $newPath = str_replace('\\', DIRECTORY_SEPARATOR, $newPath);
+
+        return $newPath;
+    }
+
+    /**
      * Converts all instances of '\' or '/' to the system directory separator.
      */
     private function normalizePaths()
     {
         foreach ($this->paths as $key => $path)
         {
-
-            $newPath = str_replace('/', DIRECTORY_SEPARATOR, $path);
-            $newPath = str_replace('\\', DIRECTORY_SEPARATOR, $newPath);
-
-            $this->paths[$key] = $newPath;
+            $this->paths[$key] = $this->normalizePath($path);
         }
     }
 
