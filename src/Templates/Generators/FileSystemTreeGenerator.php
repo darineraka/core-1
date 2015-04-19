@@ -14,6 +14,8 @@ use NewUp\Contracts\IO\FileTreeGenerator;
  */
 class FileSystemTreeGenerator implements FileTreeGenerator {
 
+    use PathNormalizer;
+
     /**
      * A collection of paths and directories to create.
      *
@@ -45,20 +47,6 @@ class FileSystemTreeGenerator implements FileTreeGenerator {
     public function addPaths($paths)
     {
         $this->paths = $this->paths + $paths;
-    }
-
-    /**
-     * Normalizes the use of '/' and '\' in a path.
-     *
-     * @param  $path
-     * @return string
-     */
-    private function normalizePath($path)
-    {
-        $newPath = str_replace('/', DIRECTORY_SEPARATOR, $path);
-        $newPath = str_replace('\\', DIRECTORY_SEPARATOR, $newPath);
-
-        return $newPath;
     }
 
     /**
