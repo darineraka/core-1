@@ -1,3 +1,5 @@
 <?php namespace NewUp\Exceptions;
 
-class NewUpException extends \Exception {}
+class NewUpException extends \Exception
+{
+}

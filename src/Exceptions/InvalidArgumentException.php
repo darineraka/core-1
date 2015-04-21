@@ -1,3 +1,5 @@
 <?php namespace NewUp\Exceptions;
 
-class InvalidArgumentException extends NewUpException {}
+class InvalidArgumentException extends NewUpException
+{
+}
