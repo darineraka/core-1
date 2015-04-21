@@ -2,4 +2,6 @@
 
 use NewUp\Exceptions\NewUpException;
 
-class RuntimeException extends NewUpException {}
+class RuntimeException extends NewUpException
+{
+}

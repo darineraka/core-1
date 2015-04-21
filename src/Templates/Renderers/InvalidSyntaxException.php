@@ -2,4 +2,6 @@
 
 use NewUp\Exceptions\NewUpException;
 
-class InvalidSyntaxException extends NewUpException {}
+class InvalidSyntaxException extends NewUpException
+{
+}

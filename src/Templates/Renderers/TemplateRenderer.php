@@ -3,10 +3,11 @@
 use NewUp\Contracts\DataCollector;
 use NewUp\Contracts\Templates\Filter as FilterContract;
 use NewUp\Contracts\Templates\Renderer;
-use NewUp\Foundation\Application;
 use NewUp\Exceptions\InvalidPathException;
+use NewUp\Foundation\Application;
 
-class TemplateRenderer implements Renderer {
+class TemplateRenderer implements Renderer
+{
 
     /**
      * Twig file system loader instance.
@@ -72,15 +73,18 @@ class TemplateRenderer implements Renderer {
     {
         $this->twigFileLoader   = new \Twig_Loader_Filesystem();
         $this->twigSystemLoader = new \Twig_Loader_Array([
-                                                             'template' => load_system_template('TemplateClass')
-                                                         ]);
+            'template' => load_system_template('TemplateClass')
+        ]);
 
         $this->twigEnvironment       =
             new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader]),
-                                  $this->environmentOptions);
+                $this->environmentOptions);
         $this->twigStringEnvironment =
-            new \Twig_Environment(new \Twig_Loader_Chain([$this->twigSystemLoader, $this->twigFileLoader,
-                                                          new \Twig_Loader_String()]), $this->environmentOptions);
+            new \Twig_Environment(new \Twig_Loader_Chain([
+                $this->twigSystemLoader,
+                $this->twigFileLoader,
+                new \Twig_Loader_String()
+            ]), $this->environmentOptions);
 
         $this->registerFilters();
         $this->registerFunctions();
@@ -104,15 +108,13 @@ class TemplateRenderer implements Renderer {
     {
         $filters = config('app.render_filters', []);
 
-        foreach ($filters as $filter)
-        {
+        foreach ($filters as $filter) {
             $filter = app($filter);
 
-            if ($filter instanceof FilterContract)
-            {
+            if ($filter instanceof FilterContract) {
                 $this->twigEnvironment->addFilter(new \Twig_SimpleFilter($filter->getName(), $filter->getOperator()));
                 $this->twigStringEnvironment->addFilter(new \Twig_SimpleFilter($filter->getName(),
-                                                                               $filter->getOperator()));
+                    $filter->getOperator()));
             }
         }
     }
@@ -125,14 +127,12 @@ class TemplateRenderer implements Renderer {
 
     private function getCorePathNameFunction()
     {
-        return new \Twig_SimpleFunction('path', function($pathName) {
+        return new \Twig_SimpleFunction('path', function ($pathName) {
 
             $data = $this->getData();
 
-            if (array_key_exists('sys_pathNames', $data))
-            {
-                if (array_key_exists($pathName, $data['sys_pathNames']))
-                {
+            if (array_key_exists('sys_pathNames', $data)) {
+                if (array_key_exists($pathName, $data['sys_pathNames'])) {
                     return $this->renderString($data['sys_pathNames'][$pathName]);
                 }
 
@@ -151,12 +151,9 @@ class TemplateRenderer implements Renderer {
      */
     public function addPath($path)
     {
-        try
-        {
+        try {
             $this->twigFileLoader->addPath($path);
-        }
-        catch (\Twig_Error_Loader $e)
-        {
+        } catch (\Twig_Error_Loader $e) {
             throw new InvalidPathException($e->getMessage());
         }
     }
@@ -238,24 +235,15 @@ class TemplateRenderer implements Renderer {
      */
     public function render($templateName)
     {
-        try
-        {
+        try {
             return $this->twigEnvironment->render($templateName, $this->getData());
-        }
-        catch (SecurityException $e)
-        {
+        } catch (SecurityException $e) {
             throw new SecurityException($e->getMessage(), $e->getCode(), $e);
-        }
-        catch (\Twig_Error_Runtime $e)
-        {
+        } catch (\Twig_Error_Runtime $e) {
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
-        }
-        catch (\Twig_Error_Syntax $e)
-        {
+        } catch (\Twig_Error_Syntax $e) {
             throw new InvalidSyntaxException($e->getMessage(), $e->getCode(), $e);
-        }
-        catch (\Twig_Error_Loader $e)
-        {
+        } catch (\Twig_Error_Loader $e) {
             throw new InvalidTemplateException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -272,24 +260,15 @@ class TemplateRenderer implements Renderer {
      */
     public function renderString($templateString)
     {
-        try
-        {
+        try {
             return $this->twigStringEnvironment->render($templateString, $this->getData());
-        }
-        catch (SecurityException $e)
-        {
+        } catch (SecurityException $e) {
             throw new SecurityException($e->getMessage(), $e->getCode(), $e);
-        }
-        catch (\Twig_Error_Runtime $e)
-        {
+        } catch (\Twig_Error_Runtime $e) {
             throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
-        }
-        catch (\Twig_Error_Syntax $e)
-        {
+        } catch (\Twig_Error_Syntax $e) {
             throw new InvalidSyntaxException($e->getMessage(), $e->getCode(), $e);
-        }
-        catch (\Twig_Error_Loader $e)
-        {
+        } catch (\Twig_Error_Loader $e) {
             throw new InvalidTemplateException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -323,8 +302,7 @@ class TemplateRenderer implements Renderer {
     {
         $collectedData = [];
 
-        foreach ($this->dataCollectors as $collector)
-        {
+        foreach ($this->dataCollectors as $collector) {
             $collectedData = $collectedData + $collector->collect();
         }
 

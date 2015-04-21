@@ -2,4 +2,6 @@
 
 use NewUp\Exceptions\NewUpException;
 
-class SecurityException extends NewUpException {}
+class SecurityException extends NewUpException
+{
+}

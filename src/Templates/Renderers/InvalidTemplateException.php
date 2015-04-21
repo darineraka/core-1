@@ -2,4 +2,6 @@
 
 use NewUp\Exceptions\NewUpException;
 
-class InvalidTemplateException extends NewUpException {}
+class InvalidTemplateException extends NewUpException
+{
+}
