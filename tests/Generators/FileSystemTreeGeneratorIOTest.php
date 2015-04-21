@@ -8,7 +8,6 @@ use org\bovigo\vfs\vfsStreamDirectory;
 class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
 {
 
-
     /**
      * The vfsStreamDirectory instance.
      *
