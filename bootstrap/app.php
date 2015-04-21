@@ -1,11 +1,11 @@
 <?php
 
-$app = new NewUp\Foundation\Application(realpath(__DIR__.'/../'));
+$app = new NewUp\Foundation\Application(realpath(__DIR__ . '/../'));
 $app->useStoragePathForOptimizations();
-$app->useStoragePath(realpath(__DIR__.'/../storage/'));
+$app->useStoragePath(realpath(__DIR__ . '/../storage/'));
 
 $app->singleton(
-'Illuminate\Contracts\Console\Kernel',
+    'Illuminate\Contracts\Console\Kernel',
     'NewUp\Console\Kernel'
 );
 
