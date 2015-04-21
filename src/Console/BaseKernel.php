@@ -1,9 +1,10 @@
 <?php namespace NewUp\Console;
 
-use NewUp\Console\Application as NewUpApplication;
 use Illuminate\Foundation\Console\Kernel as LaravelKernel;
+use NewUp\Console\Application as NewUpApplication;
 
-abstract class BaseKernel extends LaravelKernel {
+abstract class BaseKernel extends LaravelKernel
+{
 
     /**
      * The bootstrap classes for the application.
@@ -26,8 +27,7 @@ abstract class BaseKernel extends LaravelKernel {
      */
     protected function getArtisan()
     {
-        if (is_null($this->artisan))
-        {
+        if (is_null($this->artisan)) {
             return $this->artisan = (new NewUpApplication($this->app, $this->events))
                 ->resolveCommands($this->commands);
         }

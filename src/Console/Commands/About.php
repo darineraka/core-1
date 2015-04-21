@@ -2,7 +2,8 @@
 
 use Illuminate\Console\Command;
 
-class About extends Command {
+class About extends Command
+{
 
     /**
      * The console command name.
@@ -25,10 +26,10 @@ class About extends Command {
      */
     public function handle()
     {
-        $this->info('NewUp version '.$this->laravel->version());
-        $this->line('http://newup.io'.PHP_EOL);
+        $this->info('NewUp version ' . $this->laravel->version());
+        $this->line('http://newup.io' . PHP_EOL);
         $this->comment('NewUp is a simple command line utility, built on Laravel\'s Artisan, to quickly generate packages compatible with all of PHP.');
-        $this->comment('Check out the source code at github.com/newup/newup'.PHP_EOL);
+        $this->comment('Check out the source code at github.com/newup/newup' . PHP_EOL);
         $this->line('Thank you for using NewUp!');
     }
 
