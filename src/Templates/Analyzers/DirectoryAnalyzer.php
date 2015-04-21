@@ -39,7 +39,7 @@ class DirectoryAnalyzer implements DirectoryAnalyzerContract
 
         foreach ($structure as $path) {
             $type           = ($this->fileSystem->isFile($path)) ? 'file' : 'dir';
-            $newStructure[] = ['path' => $this->normalizePath($path->getPathname()), 'type' => $type];
+            $newStructure[] = ['path' => $this->normalizePath($path->getRelativePathName()), 'type' => $type];
         }
 
         return $newStructure;
