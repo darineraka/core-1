@@ -3,8 +3,9 @@
 use Illuminate\Filesystem\Filesystem;
 use NewUp\Exceptions\InvalidPathException;
 use NewUp\Templates\Generators\PathNormalizer;
+use NewUp\Contracts\IO\DirectoryAnalyzer as DirectoryAnalyzerContract;
 
-class DirectoryAnalyzer implements \NewUp\Contracts\IO\DirectoryAnalyzer
+class DirectoryAnalyzer implements DirectoryAnalyzerContract
 {
     use PathNormalizer;
 
