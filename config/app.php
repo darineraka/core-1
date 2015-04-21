@@ -21,6 +21,7 @@ return [
          */
         'NewUp\Templates\Renderers\RendererServiceProvider',
         'NewUp\Templates\Parsers\PathNameParserServiceProvider',
+        'NewUp\Templates\GeneratorAnalyzerServiceProvider',
     ],
 
     'render_filters' => [
