@@ -12,7 +12,8 @@ use NewUp\Contracts\IO\FileTreeGenerator;
  *
  * @package NewUp\Templates\Generators
  */
-class FileSystemTreeGenerator implements FileTreeGenerator {
+class FileSystemTreeGenerator implements FileTreeGenerator
+{
 
     use PathNormalizer;
 
@@ -54,8 +55,7 @@ class FileSystemTreeGenerator implements FileTreeGenerator {
      */
     private function normalizePaths()
     {
-        foreach ($this->paths as $key => $path)
-        {
+        foreach ($this->paths as $key => $path) {
             $this->paths[$key] = $this->normalizePath($path);
         }
     }
@@ -69,14 +69,13 @@ class FileSystemTreeGenerator implements FileTreeGenerator {
     {
         $this->normalizePaths();
 
-        uasort($this->paths, function($a, $b)
-        {
-            if ($a == $b)
-            {
+        uasort($this->paths, function ($a, $b) {
+            if ($a == $b) {
                 return 0;
             }
 
-            return (substr_count($a['path'], DIRECTORY_SEPARATOR) > substr_count($b['path'], DIRECTORY_SEPARATOR)) ? -1 : 1;
+            return (substr_count($a['path'], DIRECTORY_SEPARATOR) >
+                    substr_count($b['path'], DIRECTORY_SEPARATOR)) ? -1 : 1;
         });
 
         return $this->paths;
@@ -102,22 +101,18 @@ class FileSystemTreeGenerator implements FileTreeGenerator {
     {
         $generatedPaths = [];
 
-        foreach ($this->getPaths() as $pathKey => $path)
-        {
-            $fullPath = $destinationDirectory.DIRECTORY_SEPARATOR.$path['path'];
+        foreach ($this->getPaths() as $pathKey => $path) {
+            $fullPath = $destinationDirectory . DIRECTORY_SEPARATOR . $path['path'];
 
-            if ($path['type'] == 'dir')
-            {
+            if ($path['type'] == 'dir') {
                 $this->fileSystem->makeDirectory($fullPath, 0755, true, true);
 
                 $generatedPaths[$pathKey] = [
-                  'path' => $path['path'],
-                  'type' => 'dir',
-                  'full' => $fullPath,
+                    'path' => $path['path'],
+                    'type' => 'dir',
+                    'full' => $fullPath,
                 ];
-            }
-            else
-            {
+            } else {
                 // There are two steps here:
                 // 1st: Recursively create the directory structure for the file (it might not exist)
                 // 2nd: Create an empty file using `touch()` since we are guaranteed the directory structure exists.

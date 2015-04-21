@@ -1,6 +1,7 @@
 <?php namespace NewUp\Templates\Generators;
 
-trait PathNormalizer {
+trait PathNormalizer
+{
 
     /**
      * Normalizes the use of '/' and '\' in a path.

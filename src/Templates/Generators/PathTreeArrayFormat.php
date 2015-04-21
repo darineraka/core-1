@@ -3,7 +3,8 @@
 use Illuminate\Support\Str;
 use NewUp\Exceptions\InvalidArgumentException;
 
-trait PathTreeArrayFormat {
+trait PathTreeArrayFormat
+{
 
     /**
      * Converts the key and path into an array that various tree
@@ -20,14 +21,12 @@ trait PathTreeArrayFormat {
     {
         // If the $path is an array, it most likely already contains
         // the information we need, such as if the target is a file or directory.
-        if (is_array($path) && array_key_exists('type', $path) && array_key_exists('path', $path))
-        {
+        if (is_array($path) && array_key_exists('type', $path) && array_key_exists('path', $path)) {
             return $path;
         }
 
         // At this point, the key should contain at least one ']' character.
-        if (!Str::contains($pathKey, ']'))
-        {
+        if (!Str::contains($pathKey, ']')) {
             throw new InvalidArgumentException('Missing key options. Supplied key was ' . $pathKey);
         }
 
@@ -37,8 +36,7 @@ trait PathTreeArrayFormat {
         $formattingOptions = array_pop($keyParts);
         $type              = 'file';
 
-        if (Str::contains('d', $formattingOptions))
-        {
+        if (Str::contains('d', $formattingOptions)) {
             $type = 'dir';
         }
 

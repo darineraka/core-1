@@ -1,6 +1,7 @@
 <?php namespace NewUp\Templates\Generators;
 
-class AuthorsGenerator {
+class AuthorsGenerator
+{
 
     /**
      * Generates a new array of authors where each item is an object.
@@ -15,8 +16,7 @@ class AuthorsGenerator {
     {
         $newAuthors = [];
 
-        foreach ($authors as $author)
-        {
+        foreach ($authors as $author) {
             $newAuthors[] = (object)$author;
         }
 
