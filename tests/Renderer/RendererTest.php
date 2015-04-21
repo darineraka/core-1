@@ -25,7 +25,7 @@ class RendererTest extends RenderTestBase {
     }
 
     /**
-     * @expectedException \NewUp\Templates\Renderers\InvalidPathException
+     * @expectedException \NewUp\Exceptions\InvalidPathException
      */
     public function testAddPathsThrowsExceptionWhenAnInvalidPathIsAdded()
     {

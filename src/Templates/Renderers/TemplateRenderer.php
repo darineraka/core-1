@@ -4,6 +4,7 @@ use NewUp\Contracts\DataCollector;
 use NewUp\Contracts\Templates\Filter as FilterContract;
 use NewUp\Contracts\Templates\Renderer;
 use NewUp\Foundation\Application;
+use NewUp\Exceptions\InvalidPathException;
 
 class TemplateRenderer implements Renderer {
 
