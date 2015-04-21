@@ -3,7 +3,8 @@
 use Illuminate\Support\Collection;
 use NewUp\Templates\Parsers\YAMLParser;
 
-class ConfigurationWriter extends Collection {
+class ConfigurationWriter extends Collection
+{
 
     public function reset()
     {
