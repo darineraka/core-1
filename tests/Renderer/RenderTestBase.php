@@ -2,14 +2,8 @@
 
 use NewUp\Templates\Renderers\TemplateRenderer;
 
-class RenderTestBase extends \PHPUnit_Framework_TestCase {
-
-    public function getRenderer()
-    {
-        $renderer = new TemplateRenderer();
-
-        return $renderer;
-    }
+class RenderTestBase extends \PHPUnit_Framework_TestCase
+{
 
     public function getRendererWithTestTemplates()
     {
@@ -17,6 +11,13 @@ class RenderTestBase extends \PHPUnit_Framework_TestCase {
         $r->addPath(__DIR__ . '/Templates/');
 
         return $r;
+    }
+
+    public function getRenderer()
+    {
+        $renderer = new TemplateRenderer();
+
+        return $renderer;
     }
 
 }

@@ -3,11 +3,13 @@
 use NewUp\Templates\Parsers\YAMLParser;
 use NewUp\Templates\Renderers\Collectors\FileNameCollector;
 
-class FileNameCollectorTest extends RenderTestBase {
+class FileNameCollectorTest extends RenderTestBase
+{
 
     private function getCollector()
     {
         $c = new FileNameCollector;
+
         return $c;
     }
 
@@ -18,7 +20,7 @@ class FileNameCollectorTest extends RenderTestBase {
 
     public function testFileNameCollectorReturnsEmptyArrayWithoutAnyFileNames()
     {
-        $c = $this->getCollector();
+        $c         = $this->getCollector();
         $pathNames = $c->collect();
 
         $this->assertInternalType('array', $pathNames);
@@ -31,7 +33,7 @@ class FileNameCollectorTest extends RenderTestBase {
         $c = $this->getCollector();
         $p = $this->getYamlParser();
 
-        $c->addFileNames($p->parseFile(__DIR__.'/../YAML/fname_test.yaml'));
+        $c->addFileNames($p->parseFile(__DIR__ . '/../YAML/fname_test.yaml'));
         $c->addFileNames(['sample' => 'filename']);
         $pathNames = $c->collect();
 

@@ -5,7 +5,8 @@ use NewUp\Templates\Generators\FileSystemTreeGenerator;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
-class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase {
+class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
+{
 
 
     /**
@@ -26,12 +27,12 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase {
         $generator  = new FileSystemTreeGenerator($fileSystem);
 
         $generator->addPaths([
-                                 'someKey'    => ['path' => 'some/file.txt', 'type' => 'file'],
-                                 'anotherKey' => ['path' => 'some/nested/file.txt', 'type' => 'file'],
-                                 'thirdKey'   => ['path' => 'some/dir', 'type' => 'dir'],
-                                 'fourthKey'  => ['path' => 'root.txt', 'type' => 'file'],
-                                 'ignore'     => ['path' => '.gitignore', 'type' => 'file'],
-                             ]);
+            'someKey'    => ['path' => 'some/file.txt', 'type' => 'file'],
+            'anotherKey' => ['path' => 'some/nested/file.txt', 'type' => 'file'],
+            'thirdKey'   => ['path' => 'some/dir', 'type' => 'dir'],
+            'fourthKey'  => ['path' => 'root.txt', 'type' => 'file'],
+            'ignore'     => ['path' => '.gitignore', 'type' => 'file'],
+        ]);
 
         return $generator;
     }
@@ -44,11 +45,16 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase {
 
         // These are the directories and files that should be created.
         $testChildren = [
-            'some', 'some/file.txt', 'some/nested', 'some/dir', 'some/nested/file.txt', '.gitignore', 'root.txt'
+            'some',
+            'some/file.txt',
+            'some/nested',
+            'some/dir',
+            'some/nested/file.txt',
+            '.gitignore',
+            'root.txt'
         ];
 
-        foreach ($testChildren as $child)
-        {
+        foreach ($testChildren as $child) {
             $this->assertTrue($this->vfs->hasChild($child));
         }
 
@@ -61,15 +67,12 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertCount(5, $paths);
 
-        foreach (['ignore', 'fourthKey', 'thirdKey', 'anotherKey', 'someKey'] as $key)
-        {
+        foreach (['ignore', 'fourthKey', 'thirdKey', 'anotherKey', 'someKey'] as $key) {
             $this->assertArrayHasKey($key, $paths);
         }
 
-        foreach ($paths as $path)
-        {
-            foreach(['path', 'type', 'full'] as $pathPart)
-            {
+        foreach ($paths as $path) {
+            foreach (['path', 'type', 'full'] as $pathPart) {
                 $this->assertArrayHasKey($pathPart, $path);
             }
         }

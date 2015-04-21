@@ -3,7 +3,8 @@
 use NewUp\Contracts\DataCollector;
 use NewUp\Templates\Renderers\Collectors\FileNameCollector;
 
-class RenderCollectionTest extends RenderTestBase {
+class RenderCollectionTest extends RenderTestBase
+{
 
     public function testGetCollectorsReturnsArray()
     {
@@ -12,7 +13,7 @@ class RenderCollectionTest extends RenderTestBase {
 
     public function testRendererAcceptsCollectors()
     {
-        $r = $this->getRenderer();
+        $r         = $this->getRenderer();
         $collector = new FileNameCollector;
         $r->addCollector($collector);
         $this->assertCount(1, $r->getCollectors());
@@ -26,7 +27,7 @@ class RenderCollectionTest extends RenderTestBase {
 
     public function testRenderDataCollectionReturnsDataFromCollectors()
     {
-        $r = $this->getRenderer();
+        $r              = $this->getRenderer();
         $firstCollector = new FileNameCollector;
         $firstCollector->addFileNames(['sample' => 'file']);
 
@@ -57,7 +58,8 @@ class RenderCollectionTest extends RenderTestBase {
 
 }
 
-class DummyCollector implements DataCollector {
+class DummyCollector implements DataCollector
+{
 
     /**
      * Returns an array of data that should be merged with the rendering environment.

@@ -3,7 +3,8 @@
 use NewUp\Templates\Parsers\FileSystemPathNameParser;
 use NewUp\Templates\Renderers\TemplateRenderer;
 
-class PathNameParserTest extends \PHPUnit_Framework_TestCase {
+class PathNameParserTest extends \PHPUnit_Framework_TestCase
+{
 
     protected $renderer = null;
 
@@ -12,8 +13,7 @@ class PathNameParserTest extends \PHPUnit_Framework_TestCase {
      */
     private function getRenderer()
     {
-        if ($this->renderer == null)
-        {
+        if ($this->renderer == null) {
             $this->renderer = new TemplateRenderer();
         }
 

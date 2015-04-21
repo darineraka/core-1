@@ -1,6 +1,7 @@
 <?php namespace NewUp\Tests\Renderer;
 
-class FilterTest extends RenderTestBase {
+class FilterTest extends RenderTestBase
+{
 
     /**
      * Default filters expected values and the name of the test template file.
@@ -24,8 +25,7 @@ class FilterTest extends RenderTestBase {
     {
         $r = $this->getRendererWithTestTemplates();
 
-        foreach ($this->defaultFiltersAndExpectedValues as $expectedValue => $testTemplate)
-        {
+        foreach ($this->defaultFiltersAndExpectedValues as $expectedValue => $testTemplate) {
             $this->assertEquals($expectedValue, $r->render($testTemplate));
         }
 

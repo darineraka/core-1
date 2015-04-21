@@ -2,14 +2,8 @@
 
 use NewUp\Templates\Generators\FileSystemTreeGenerator;
 
-class FileSystemTreeGeneratorTest extends \PHPUnit_Framework_TestCase {
-
-    private function getGenerator()
-    {
-        $fileSystem = $this->getMock('Illuminate\Filesystem\Filesystem');
-        $generator = new FileSystemTreeGenerator($fileSystem);
-        return $generator;
-    }
+class FileSystemTreeGeneratorTest extends \PHPUnit_Framework_TestCase
+{
 
     public function testAddPathsWorks()
     {
@@ -18,13 +12,21 @@ class FileSystemTreeGeneratorTest extends \PHPUnit_Framework_TestCase {
         $this->assertCount(1, $g->getPaths());
     }
 
+    private function getGenerator()
+    {
+        $fileSystem = $this->getMock('Illuminate\Filesystem\Filesystem');
+        $generator  = new FileSystemTreeGenerator($fileSystem);
+
+        return $generator;
+    }
+
     public function testGeneratorIsSortingThePathsInTheCorrectOrder()
     {
         $g = $this->getGenerator();
 
         $startPaths = [
-          'first.php' => ['path' => 'this/should/appear/last/file.php', 'type' => 'file'],
-          'second' => ['path' => 'this/should/appear/first/because/its/nested/further/file.php', 'type' => 'file']
+            'first.php' => ['path' => 'this/should/appear/last/file.php', 'type' => 'file'],
+            'second'    => ['path' => 'this/should/appear/first/because/its/nested/further/file.php', 'type' => 'file']
         ];
 
         $g->addPaths($startPaths);

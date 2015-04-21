@@ -2,14 +2,8 @@
 
 use NewUp\Templates\Renderers\Collectors\FileNameCollector;
 
-class CoreRendererPathFunctionTest extends RenderTestBase {
-
-    private function getCollector()
-    {
-        $c = new FileNameCollector;
-        $c->addFileNames(['test' => '{{ "test_me"|studly }}']);
-        return $c;
-    }
+class CoreRendererPathFunctionTest extends RenderTestBase
+{
 
     public function testPathFunctionReturnsEmptyStringIfPathDoesNotExist()
     {
@@ -19,6 +13,14 @@ class CoreRendererPathFunctionTest extends RenderTestBase {
         $this->assertEquals('', $r->renderString('{{ path("x") }}'));
         $c->addFileNames(['test' => '{{ "test_me"|studly }}']);
 
+    }
+
+    private function getCollector()
+    {
+        $c = new FileNameCollector;
+        $c->addFileNames(['test' => '{{ "test_me"|studly }}']);
+
+        return $c;
     }
 
     public function testPathFunctionReturnsParsedPathName()

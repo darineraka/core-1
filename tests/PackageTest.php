@@ -2,25 +2,8 @@
 
 use NewUp\Templates\Package;
 
-class PackageTest extends PHPUnit_Framework_TestCase {
-
-    private function getPackageDetails()
-    {
-        return [
-          'name' => 'vendor/package',
-          'description' => 'Test description',
-          'license' => 'MIT',
-          'authors' => [
-              ['name' => 'User', 'email' => 'email@example.com'],
-              ['name' => 'Another user', 'email' => 'user2@example.com']
-          ]
-        ];
-    }
-
-    private function getPackageFromArray()
-    {
-        return Package::fromArray($this->getPackageDetails());
-    }
+class PackageTest extends PHPUnit_Framework_TestCase
+{
 
     public function testPackageLoadsFromArray()
     {
@@ -28,15 +11,33 @@ class PackageTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('NewUp\Contracts\Packages\Package', $package);
     }
 
+    private function getPackageFromArray()
+    {
+        return Package::fromArray($this->getPackageDetails());
+    }
+
+    private function getPackageDetails()
+    {
+        return [
+            'name'        => 'vendor/package',
+            'description' => 'Test description',
+            'license'     => 'MIT',
+            'authors'     => [
+                ['name' => 'User', 'email' => 'email@example.com'],
+                ['name' => 'Another user', 'email' => 'user2@example.com']
+            ]
+        ];
+    }
+
     public function testPackageLoadsFromFile()
     {
-        $package = Package::fromFile(__DIR__.'/stubs/composer.json');
+        $package = Package::fromFile(__DIR__ . '/stubs/composer.json');
         $this->assertInstanceOf('NewUp\Contracts\Packages\Package', $package);
     }
 
     public function testPackageFromFileSetsDataCorrectly()
     {
-        $package = Package::fromFile(__DIR__.'/stubs/composer.json');
+        $package = Package::fromFile(__DIR__ . '/stubs/composer.json');
         $this->assertEquals($package->getVendor(), 'vendor');
         $this->assertEquals($package->getPackage(), 'package');
         $this->assertEquals($package->getDescription(), 'An example');
@@ -62,12 +63,11 @@ class PackageTest extends PHPUnit_Framework_TestCase {
 
     public function testPackageConvertsAuthorsIntoObjects()
     {
-        $package = $this->getPackageFromArray();
+        $package        = $this->getPackageFromArray();
         $packageAuthors = $package->getAuthors();
-        $authors = $this->getPackageDetails()['authors'];
+        $authors        = $this->getPackageDetails()['authors'];
 
-        for ($i = 0; $i < count($authors); $i++)
-        {
+        for ($i = 0; $i < count($authors); $i++) {
             $this->assertInstanceOf('stdClass', $packageAuthors[$i]);
             $this->assertEquals($packageAuthors[$i], (object)$authors[$i]);
         }

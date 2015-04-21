@@ -2,7 +2,8 @@
 
 use NewUp\Templates\Generators\PathTreeArrayFormat;
 
-class PathTreeArrayFormatTest extends \PHPUnit_Framework_TestCase {
+class PathTreeArrayFormatTest extends \PHPUnit_Framework_TestCase
+{
 
     public function testPathTreeArrayTraitDoesNotModifyValidArrays()
     {
@@ -31,14 +32,15 @@ class PathTreeArrayFormatTest extends \PHPUnit_Framework_TestCase {
         $pathTreeArrayFormatter = new PathTreeArrayFormatProxy;
 
         $this->assertEquals([
-                                'path' => 'test/path.php',
-                                'type' => 'file'
-                            ], $pathTreeArrayFormatter->p_getPathForTreeGenerator('path.php]f', 'test/path.php'));
+            'path' => 'test/path.php',
+            'type' => 'file'
+        ], $pathTreeArrayFormatter->p_getPathForTreeGenerator('path.php]f', 'test/path.php'));
     }
 
 }
 
-class PathTreeArrayFormatProxy {
+class PathTreeArrayFormatProxy
+{
 
     use PathTreeArrayFormat;
 

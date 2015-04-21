@@ -2,7 +2,8 @@
 
 use NewUp\Foundation\Application;
 
-class RendererTest extends RenderTestBase {
+class RendererTest extends RenderTestBase
+{
 
     public function testSystemCorePathIsAvailableByDefault()
     {
@@ -17,10 +18,10 @@ class RendererTest extends RenderTestBase {
     {
         $r = $this->getRenderer();
 
-        $r->addPath(storage_path().'/templates');
+        $r->addPath(storage_path() . '/templates');
         $this->assertCount(2, $r->getPaths());
 
-        $r->addPath(storage_path().'/templates/store');
+        $r->addPath(storage_path() . '/templates/store');
         $this->assertCount(3, $r->getPaths());
     }
 
@@ -73,7 +74,7 @@ class RendererTest extends RenderTestBase {
         $r->setData('another', '!');
         $this->assertEquals('Hello world', $r->render('Test_Data'));
         $this->assertEquals('Hello world!', $r->render('Test_Data_Multiple'));
-        $this->assertEquals('Hello world'.Application::VERSION, $r->render('Test_Data_Merged'));
+        $this->assertEquals('Hello world' . Application::VERSION, $r->render('Test_Data_Merged'));
     }
 
     /**
@@ -128,14 +129,14 @@ class RendererTest extends RenderTestBase {
 
     public function testTemplatesCanUseInheritence()
     {
-        $r = $this->getRendererWithTestTemplates();
+        $r     = $this->getRendererWithTestTemplates();
         $value = $r->render('Test_Child');
         $this->assertEquals('This is a base template.', $value);
     }
 
     public function testTemplatesCanUseInheritenceBlocks()
     {
-        $r = $this->getRendererWithTestTemplates();
+        $r     = $this->getRendererWithTestTemplates();
         $value = $r->render('Test_Block_Child');
         $this->assertStringEqualsFile(__DIR__ . '/Templates/Test_Block_Child_Expected', $value);
     }
