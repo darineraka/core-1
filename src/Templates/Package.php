@@ -4,7 +4,8 @@ use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use NewUp\Contracts\Packages\Package as PackageContract;
 use NewUp\Contracts\Packages\PackageFactory;
 
-class Package implements PackageContract, PackageFactory {
+class Package implements PackageContract, PackageFactory
+{
 
     /**
      * The vendor name.
@@ -138,8 +139,7 @@ class Package implements PackageContract, PackageFactory {
      */
     public function setAuthors(array $authors)
     {
-        foreach ($authors as $author)
-        {
+        foreach ($authors as $author) {
             $this->authors[] = (object)$author;
         }
     }
@@ -153,8 +153,7 @@ class Package implements PackageContract, PackageFactory {
      */
     public static function throwInvalidArgumentException($value, $message)
     {
-        if ($value == null)
-        {
+        if ($value == null) {
             throw new \InvalidArgumentException($message);
         }
     }
@@ -168,14 +167,11 @@ class Package implements PackageContract, PackageFactory {
      */
     public static function parseVendorAndPackage($templateName)
     {
-        if ($templateName !== null)
-        {
+        if ($templateName !== null) {
             $nameParts = explode('/', $templateName);
 
-            if (count($nameParts) == 2)
-            {
-                if (strlen($nameParts[0]) > 0 && strlen($nameParts[1]) > 0)
-                {
+            if (count($nameParts) == 2) {
+                if (strlen($nameParts[0]) > 0 && strlen($nameParts[1]) > 0) {
                     return $nameParts;
                 }
             }
