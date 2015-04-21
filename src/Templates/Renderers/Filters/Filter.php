@@ -2,7 +2,8 @@
 
 use NewUp\Contracts\Templates\Filter as FilterContract;
 
-abstract class Filter implements FilterContract {
+abstract class Filter implements FilterContract
+{
 
     protected $name;
 

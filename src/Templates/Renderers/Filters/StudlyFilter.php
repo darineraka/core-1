@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Str;
 
-class StudlyFilter extends Filter {
+class StudlyFilter extends Filter
+{
 
     protected $name = 'studly';
 
     public function getOperator()
     {
-        return function ($string)
-        {
+        return function ($string) {
             return Str::studly($string);
         };
     }

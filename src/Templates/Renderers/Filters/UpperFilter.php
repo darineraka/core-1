@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Str;
 
-class UpperFilter extends Filter {
+class UpperFilter extends Filter
+{
 
     protected $name = 'upper';
 
     public function getOperator()
     {
-        return function ($string)
-        {
+        return function ($string) {
             return Str::upper($string);
         };
     }

@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Str;
 
-class LowerFilter extends Filter {
+class LowerFilter extends Filter
+{
 
     protected $name = 'lower';
 
     public function getOperator()
     {
-        return function ($string)
-        {
+        return function ($string) {
             return Str::lower($string);
         };
     }

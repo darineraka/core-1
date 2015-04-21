@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Str;
 
-class SingularFilter extends Filter {
+class SingularFilter extends Filter
+{
 
     protected $name = 'singular';
 
     public function getOperator()
     {
-        return function ($string)
-        {
+        return function ($string) {
             return Str::singular($string);
         };
     }
