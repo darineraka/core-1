@@ -2,7 +2,8 @@
 
 use Illuminate\Foundation\Application as LaravelApplication;
 
-class Application extends LaravelApplication {
+class Application extends LaravelApplication
+{
 
     /**
      * The NewUp utility version.

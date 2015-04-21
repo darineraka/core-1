@@ -1,13 +1,13 @@
 <?php namespace NewUp\Foundation\Exceptions;
 
 use Exception;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
-use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class LoglessHandler implements ExceptionHandlerContract {
+class LoglessHandler implements ExceptionHandlerContract
+{
 
 
     /**
@@ -20,36 +20,39 @@ class LoglessHandler implements ExceptionHandlerContract {
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $e
+     * @param  \Exception $e
      * @return void
      */
     public function report(Exception $e)
     {
-        if ($this->shouldntReport($e)) return;
+        if ($this->shouldntReport($e)) {
+            return;
+        }
     }
 
     /**
      * Determine if the exception should be reported.
      *
-     * @param  \Exception  $e
+     * @param  \Exception $e
      * @return bool
      */
     public function shouldReport(Exception $e)
     {
-        return ! $this->shouldntReport($e);
+        return !$this->shouldntReport($e);
     }
 
     /**
      * Determine if the exception is in the "do not report" list.
      *
-     * @param  \Exception  $e
+     * @param  \Exception $e
      * @return bool
      */
     protected function shouldntReport(Exception $e)
     {
-        foreach ($this->dontReport as $type)
-        {
-            if ($e instanceof $type) return true;
+        foreach ($this->dontReport as $type) {
+            if ($e instanceof $type) {
+                return true;
+            }
         }
 
         return false;
@@ -58,18 +61,15 @@ class LoglessHandler implements ExceptionHandlerContract {
     /**
      * Render an exception into a response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception               $e
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
     {
-        if ($this->isHttpException($e))
-        {
+        if ($this->isHttpException($e)) {
             return $this->renderHttpException($e);
-        }
-        else
-        {
+        } else {
             return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
         }
     }
@@ -77,8 +77,8 @@ class LoglessHandler implements ExceptionHandlerContract {
     /**
      * Render an exception to the console.
      *
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     * @param  \Exception  $e
+     * @param  \Symfony\Component\Console\Output\OutputInterface $output
+     * @param  \Exception                                        $e
      * @return void
      */
     public function renderForConsole($output, Exception $e)
@@ -89,19 +89,16 @@ class LoglessHandler implements ExceptionHandlerContract {
     /**
      * Render the given HttpException.
      *
-     * @param  \Symfony\Component\HttpKernel\Exception\HttpException  $e
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException $e
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function renderHttpException(HttpException $e)
     {
         $status = $e->getStatusCode();
 
-        if (view()->exists("errors.{$status}"))
-        {
+        if (view()->exists("errors.{$status}")) {
             return response()->view("errors.{$status}", [], $status);
-        }
-        else
-        {
+        } else {
             return (new SymfonyDisplayer(config('app.debug')))->createResponse($e);
         }
     }
@@ -109,7 +106,7 @@ class LoglessHandler implements ExceptionHandlerContract {
     /**
      * Determine if the given exception is an HTTP exception.
      *
-     * @param  \Exception  $e
+     * @param  \Exception $e
      * @return bool
      */
     protected function isHttpException(Exception $e)
