@@ -3,7 +3,8 @@
 use NewUp\Contracts\Templates\PathNameParser;
 use NewUp\Contracts\Templates\Renderer;
 
-class FileSystemPathNameParser implements PathNameParser {
+class FileSystemPathNameParser implements PathNameParser
+{
 
     const ESCAPE_DOUBLE_OPEN_BRACKET = '//ESCAPE_OPEN_SQUARE_BRACKET//';
 
@@ -123,17 +124,15 @@ class FileSystemPathNameParser implements PathNameParser {
      */
     private function constructPathNameLexer()
     {
-        if ($this->originalTwigLexer == null)
-        {
+        if ($this->originalTwigLexer == null) {
             $this->originalTwigLexer = $this->templateRenderer->getStringEnvironment()->getLexer();
         }
 
-        if ($this->pathLexer == null)
-        {
+        if ($this->pathLexer == null) {
             $this->pathLexer = new \Twig_Lexer($this->templateRenderer->getStringEnvironment(), [
-                'tag_comment'   => ['{#', '#}'],
-                'tag_block'     => ['{%', '%}'],
-                'tag_variable'  => ['{', '}']
+                'tag_comment'  => ['{#', '#}'],
+                'tag_block'    => ['{%', '%}'],
+                'tag_variable' => ['{', '}']
             ]);
         }
 
@@ -148,8 +147,7 @@ class FileSystemPathNameParser implements PathNameParser {
      */
     private function restoreOriginalLexer()
     {
-        if ($this->originalTwigLexer != null)
-        {
+        if ($this->originalTwigLexer != null) {
             $this->templateRenderer->getStringEnvironment()->setLexer($this->originalTwigLexer);
         }
     }
@@ -169,6 +167,7 @@ class FileSystemPathNameParser implements PathNameParser {
         $path = $this->templateRenderer->renderString($path);
         $this->restoreOriginalLexer();
         $path = $this->removeUnwantedCharactersFromString($path);
+
         return $path;
     }
 

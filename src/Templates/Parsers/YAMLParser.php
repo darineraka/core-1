@@ -3,7 +3,8 @@
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Yaml;
 
-class YAMLParser {
+class YAMLParser
+{
 
     /**
      * The parser instance.
@@ -26,8 +27,7 @@ class YAMLParser {
      */
     private function getParser()
     {
-        if ($this->yamlParser == null)
-        {
+        if ($this->yamlParser == null) {
             $this->yamlParser = new Parser;
         }
 
@@ -53,14 +53,10 @@ class YAMLParser {
      */
     private function trimArray(&$array)
     {
-        foreach ($array as $key => $value)
-        {
-            if (is_string($value))
-            {
+        foreach ($array as $key => $value) {
+            if (is_string($value)) {
                 $array[$key] = trim($value);
-            }
-            else if (is_array($value))
-            {
+            } else if (is_array($value)) {
                 $array[$key] = $this->trimArray($value);
             }
         }
@@ -88,8 +84,7 @@ class YAMLParser {
     {
         $value = $this->getParser()->parse($string);
 
-        if ($this->trimArrayValues && is_array($value))
-        {
+        if ($this->trimArrayValues && is_array($value)) {
             return $this->trimArray($value);
         }
 
