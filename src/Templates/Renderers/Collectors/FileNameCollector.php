@@ -2,7 +2,8 @@
 
 use NewUp\Contracts\DataCollector;
 
-class FileNameCollector implements DataCollector {
+class FileNameCollector implements DataCollector
+{
 
     protected $fileNames = [];
 
