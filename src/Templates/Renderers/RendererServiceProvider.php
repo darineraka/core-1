@@ -12,7 +12,7 @@ class RendererServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('NewUp\Contracts\Renderer', function () {
+        $this->app->singleton('NewUp\Contracts\Templates\Renderer', function () {
             return $this->app->make('NewUp\Templates\Renderers\TemplateRenderer');
         });
     }
