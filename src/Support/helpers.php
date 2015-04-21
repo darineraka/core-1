@@ -1,7 +1,6 @@
 <?php
 
-if (!function_exists('core_templates_path'))
-{
+if (!function_exists('core_templates_path')) {
     /**
      * Gets the core templates path.
      *
@@ -9,12 +8,11 @@ if (!function_exists('core_templates_path'))
      */
     function core_templates_path()
     {
-        return storage_path().'/templates/system/core/';
+        return storage_path() . '/templates/system/core/';
     }
 }
 
-if (!function_exists('load_system_template'))
-{
+if (!function_exists('load_system_template')) {
     /**
      * Get the contents of a system template by name.
      *
@@ -23,10 +21,9 @@ if (!function_exists('load_system_template'))
      */
     function load_system_template($templateName)
     {
-        $templateFile = storage_path().'/templates/system/'.$templateName.'.newup';
+        $templateFile = storage_path() . '/templates/system/' . $templateName . '.newup';
 
-        if (file_exists($templateFile))
-        {
+        if (file_exists($templateFile)) {
             return file_get_contents($templateFile);
         }
 
@@ -34,8 +31,7 @@ if (!function_exists('load_system_template'))
     }
 }
 
-if (!function_exists('load_core_template'))
-{
+if (!function_exists('load_core_template')) {
     /**
      * Get the contents of a core template by name.
      *
@@ -44,10 +40,9 @@ if (!function_exists('load_core_template'))
      */
     function load_core_template($templateName)
     {
-        $templateFile = storage_path().'/templates/system/core/'.$templateName;
+        $templateFile = storage_path() . '/templates/system/core/' . $templateName;
 
-        if (file_exists($templateFile))
-        {
+        if (file_exists($templateFile)) {
             return file_get_contents($templateFile);
         }
 
