@@ -2,7 +2,8 @@
 
 use NewUp\Contracts\DataCollector;
 
-interface Renderer {
+interface Renderer
+{
 
     /**
      * Adds a path to the rendering environment.

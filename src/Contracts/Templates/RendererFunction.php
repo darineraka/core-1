@@ -1,10 +1,10 @@
 <?php namespace NewUp\Contracts\Templates;
 
-interface Filter
+interface RendererFunction
 {
 
     public function getName();
 
-    public function getOperator();
+    public function getFunction();
 
 }

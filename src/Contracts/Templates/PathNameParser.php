@@ -1,6 +1,7 @@
 <?php namespace NewUp\Contracts\Templates;
 
-interface PathNameParser {
+interface PathNameParser
+{
 
     /**
      * Adds characters that should be automatically removed from the final path.

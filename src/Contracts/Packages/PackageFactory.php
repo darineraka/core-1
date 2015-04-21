@@ -1,6 +1,7 @@
 <?php namespace NewUp\Contracts\Packages;
 
-interface PackageFactory {
+interface PackageFactory
+{
 
     /**
      * Returns a new package instance from the provided an array.

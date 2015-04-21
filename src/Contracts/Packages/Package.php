@@ -1,6 +1,7 @@
 <?php namespace NewUp\Contracts\Packages;
 
-interface Package {
+interface Package
+{
 
     /**
      * Gets the vendor.
@@ -19,6 +20,7 @@ interface Package {
 
     /**
      * Gets the package name.
+     *
      * @return string
      */
     public function getPackage();
@@ -32,6 +34,7 @@ interface Package {
 
     /**
      * Sets the package description.
+     *
      * @param $description
      */
     public function setDescription($description);

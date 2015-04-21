@@ -1,6 +1,7 @@
 <?php namespace NewUp\Contracts\IO;
 
-interface FileTreeGenerator {
+interface FileTreeGenerator
+{
 
     /**
      * Adds paths to the file tree generator.
