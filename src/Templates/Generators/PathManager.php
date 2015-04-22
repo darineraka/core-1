@@ -7,6 +7,29 @@ use NewUp\Templates\Analyzers\DirectoryAnalyzer;
 use NewUp\Templates\Parsers\YAMLParser;
 use NewUp\Templates\Renderers\Collectors\FileNameCollector;
 
+/**
+ * Class PathManager
+ *
+ * The PathManager is a simple-to-use facade that makes working with the following
+ * sub-systems easier when generating a package's directory and file structure:
+ *
+ * - NewUp\Templates\Analyzers\DirectoryAnalyzer
+ * - NewUp\Contracts\Templates\PathNameParser
+ * - NewUp\Contracts\IO\FileTreeGenerator
+ *
+ * This manager does NOT add any content to the files it creates.
+ *
+ * Paths to the template package must be added using the `addPaths()` method.
+ *
+ * Data can be added to the underlying FileNameCollector by using the `addPathToCollector()`
+ * and `addRawToCollector()` methods. All data added to the collector will be considered when
+ * the final directory structure is created.
+ *
+ * To generate the directory structure in a directory, use the `emitStructure($destination)`
+ * method where the `$destination` is the directory in which the structure will be created.
+ *
+ * @package NewUp\Templates\Generators
+ */
 class PathManager
 {
 
@@ -185,6 +208,11 @@ class PathManager
         $this->filePathCollector->addFileNames([$key => $value]);
     }
 
+    /**
+     * Creates a directory structure in the provided destination directory.
+     *
+     * @param $destination
+     */
     public function emitStructure($destination)
     {
         $this->treeGenerator->addPaths($this->getPaths());
