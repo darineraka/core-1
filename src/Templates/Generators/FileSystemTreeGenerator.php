@@ -106,25 +106,15 @@ class FileSystemTreeGenerator implements FileTreeGenerator
 
             if ($path['type'] == 'dir') {
                 $this->fileSystem->makeDirectory($fullPath, 0755, true, true);
-
-                $generatedPaths[$pathKey] = [
-                    'path' => $path['path'],
-                    'type' => 'dir',
-                    'full' => $fullPath,
-                ];
             } else {
                 // There are two steps here:
                 // 1st: Recursively create the directory structure for the file (it might not exist)
                 // 2nd: Create an empty file using `touch()` since we are guaranteed the directory structure exists.
                 $this->fileSystem->makeDirectory(dirname($fullPath), 0755, true, true);
                 touch($fullPath);
-
-                $generatedPaths[$pathKey] = [
-                    'path' => $path['path'],
-                    'type' => 'file',
-                    'full' => $fullPath
-                ];
             }
+
+            $generatedPaths[$pathKey] = ($path + ['full' => $fullPath]);
         }
 
         return $generatedPaths;
