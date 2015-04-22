@@ -125,6 +125,17 @@ class PathManager
     }
 
     /**
+     * Adds a raw set of collector replacement values to the path data collector.
+     *
+     * @param $key
+     * @param $value
+     */
+    public function addRawToCollector($key, $value)
+    {
+        $this->filePathCollector->addFileNames([$key => $value]);
+    }
+
+    /**
      * Adds paths to the underlying collectors and tree generators.
      *
      * @param array $paths
@@ -195,17 +206,6 @@ class PathManager
         }
 
         return null;
-    }
-
-    /**
-     * Adds a raw set of collector replacement values to the path data collector.
-     *
-     * @param $key
-     * @param $value
-     */
-    public function addRawToCollector($key, $value)
-    {
-        $this->filePathCollector->addFileNames([$key => $value]);
     }
 
     /**
