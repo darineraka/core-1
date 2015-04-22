@@ -221,6 +221,30 @@ class PathManager
     }
 
     /**
+     * A helper method to quickly emit the directory structure from
+     * either a single file or an array of files to a single output
+     * directory.
+     *
+     * @param       $from
+     * @param       $to
+     * @param array $collectorData
+     * @return FileNameCollector
+     */
+    public static function copy($from, $to, $collectorData = [])
+    {
+        $manager = app(get_called_class());
+
+        if (!is_array($from)) { $from = array($from); }
+
+        $manager->addPaths($from);
+        $manager->emitStructure($to);
+
+        // Return the collector so any consuming code can add it to any
+        //renderers that may need it.
+        return $manager->getCollector();
+    }
+
+    /**
      * Returns all the processed paths.
      *
      * @return array
