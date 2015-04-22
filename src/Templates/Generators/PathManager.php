@@ -234,7 +234,21 @@ class PathManager
     {
         $manager = app(get_called_class());
 
-        if (!is_array($from)) { $from = array($from); }
+        if (!is_array($from)) {
+            $from = array($from);
+        }
+
+        // Iterate over the $collectorData and add any data to the
+        // $manager that might be required.
+        foreach ($collectorData as $key => $value) {
+            // A value of NULL will indicate that the given key should
+            // be added to the collector's paths.
+            if ($value == null) {
+                $manager->addPathToCollector($key);
+            } else {
+                $manager->addRawToCollector($key, $value);
+            }
+        }
 
         $manager->addPaths($from);
         $manager->emitStructure($to);
