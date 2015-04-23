@@ -78,4 +78,73 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testAddIgnoredFilesWorks()
+    {
+        $g = $this->getGenerator();
+        $g->addIgnoredPath('test');
+        $g->addIgnoredPath('test2');
+
+        $this->assertCount(2, $g->getIgnoredPaths());
+    }
+
+    public function testAddAutomaticallyRemovedPathsWorks()
+    {
+        $g = $this->getGenerator();
+        $g->addAutomaticallyRemovedPath('test');
+        $g->addAutomaticallyRemovedPath('test2');
+
+        $this->assertCount(2, $g->getAutomaticallyRemovedPaths());
+    }
+
+    public function testResetIgnoredPathsWorks()
+    {
+        $g = $this->getGenerator();
+        $g->addIgnoredPath('test');
+        $g->resetIgnoredPaths();
+
+
+        $this->assertCount(0, $g->getIgnoredPaths());
+    }
+
+    public function testResetAutomaticallyRemovedPathsWorks()
+    {
+        $g = $this->getGenerator();
+        $g->addAutomaticallyRemovedPath('test');
+        $g->resetAutomaticallyRemovedPaths();
+
+        $this->assertCount(0, $g->getAutomaticallyRemovedPaths());
+    }
+
+    public function testRemoveSpecificIgnoredPathWorks()
+    {
+        $g = $this->getGenerator();
+        $g->addIgnoredPath('test');
+        $g->removeIgnoredPath('test');
+
+        $this->assertCount(0, $g->getIgnoredPaths());
+
+        $g->addIgnoredPath('test');
+        $g->addIgnoredPath('test2');
+        $g->removeIgnoredPath('test');
+
+        $this->assertEquals('test2', $g->getIgnoredPaths()[0]);
+    }
+
+    public function testRemoveSpecificAutomaticallyRemovedPathWorks()
+    {
+        $g = $this->getGenerator();
+        $g->addAutomaticallyRemovedPath('test');
+        $g->removeAutomaticallyRemovedPath('test');
+
+        $this->assertCount(0, $g->getAutomaticallyRemovedPaths());
+
+        $g->addAutomaticallyRemovedPath('test');
+        $g->addAutomaticallyRemovedPath('test2');
+        $g->removeAutomaticallyRemovedPath('test');
+
+        $this->assertEquals('test2', $g->getAutomaticallyRemovedPaths()[0]);
+    }
+
+
+
 }
