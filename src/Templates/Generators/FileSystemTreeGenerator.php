@@ -1,6 +1,7 @@
 <?php namespace NewUp\Templates\Generators;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use NewUp\Contracts\IO\FileTreeGenerator;
 
 /**
@@ -118,20 +119,64 @@ class FileSystemTreeGenerator implements FileTreeGenerator
         foreach ($this->getPaths() as $pathKey => $path) {
             $fullPath = $destinationDirectory . DIRECTORY_SEPARATOR . $path['path'];
 
-            if ($path['type'] == 'dir') {
-                $this->fileSystem->makeDirectory($fullPath, 0755, true, true);
-            } else {
-                // There are two steps here:
-                // 1st: Recursively create the directory structure for the file (it might not exist)
-                // 2nd: Create an empty file using `touch()` since we are guaranteed the directory structure exists.
-                $this->fileSystem->makeDirectory(dirname($fullPath), 0755, true, true);
-                touch($fullPath);
-            }
+            if (!$this->shouldBeIgnored($path['path'])) {
+                if ($path['type'] == 'dir') {
+                    $this->fileSystem->makeDirectory($fullPath, 0755, true, true);
+                } else {
+                    // There are two steps here:
+                    // 1st: Recursively create the directory structure for the file (it might not exist)
+                    // 2nd: Create an empty file using `touch()` since we are guaranteed the directory structure exists.
+                    $this->fileSystem->makeDirectory(dirname($fullPath), 0755, true, true);
+                    touch($fullPath);
+                }
 
-            $generatedPaths[$pathKey] = ($path + ['full' => $fullPath]);
+                if ($this->shouldBeRemoved($path['path'])) {
+                    $this->fileSystem->delete($fullPath);
+                }
+
+                $generatedPaths[$pathKey] = ($path + ['full' => $fullPath]);
+            }
         }
 
         return $generatedPaths;
+    }
+
+    /**
+     * Determines if a path should be ignored.
+     *
+     * @param  $path
+     * @return bool
+     */
+    private function shouldBeIgnored($path)
+    {
+        $path = $this->normalizePath($path);
+
+        foreach ($this->ignoredPaths as $ignoredPath) {
+            if (Str::is($this->normalizePath($ignoredPath), $path)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Determines if a path should be removed.
+     *
+     * @param  $path
+     * @return bool
+     */
+    public function shouldBeRemoved($path)
+    {
+        $path = $this->normalizePath($path);
+
+        foreach ($this->automaticallyRemovedPaths as $removedPath) {
+            if (Str::is($removedPath, $path)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

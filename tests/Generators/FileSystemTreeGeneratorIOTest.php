@@ -59,6 +59,40 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testGeneratorIgnoresSpecificFiles()
+    {
+        $g = $this->getGenerator();
+        $g->addIgnoredPath('.gitignore');
+        $g->generate(vfsStream::url('fst'));
+        $this->assertFalse($this->vfs->hasChild('.gitignore'));
+    }
+
+    public function testGeneratorIgnoresWithWildCard()
+    {
+        $g = $this->getGenerator();
+        $g->addIgnoredPath('*some/*');
+        $g->generate(vfsStream::url('fst'));
+        $this->assertCount(2, $this->vfs->getChildren());
+
+        foreach ([
+                     'some',
+                     'some/file.txt',
+                     'some/nested',
+                     'some/dir',
+                     'some/nested/file.txt'
+                 ] as $path) {
+            $this->assertFalse($this->vfs->hasChild($path));
+        }
+
+        foreach ([
+                     '.gitignore',
+                     'root.txt'
+                 ] as $path) {
+            $this->assertTrue($this->vfs->hasChild($path));
+        }
+
+    }
+
     public function testFileSystemTreeGeneratorReturnsAnArrayOfTheFilesCreated()
     {
         $g     = $this->getGenerator();
@@ -144,7 +178,6 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('test2', $g->getAutomaticallyRemovedPaths()[0]);
     }
-
 
 
 }
