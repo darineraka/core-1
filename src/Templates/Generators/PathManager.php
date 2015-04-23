@@ -228,7 +228,7 @@ class PathManager
      * @param       $from
      * @param       $to
      * @param array $collectorData
-     * @return FileNameCollector
+     * @return PathManager
      */
     public static function copy($from, $to, $collectorData = [])
     {
@@ -253,9 +253,7 @@ class PathManager
         $manager->addPaths($from);
         $manager->emitStructure($to);
 
-        // Return the collector so any consuming code can add it to any
-        //renderers that may need it.
-        return $manager->getCollector();
+        return $manager;
     }
 
     /**
