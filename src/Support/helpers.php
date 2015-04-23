@@ -1,5 +1,20 @@
 <?php
 
+if (!function_exists('array_remove_value')) {
+    /**
+     * Removes the given value from the array.
+     *
+     * @param $array
+     * @param $value
+     */
+    function array_remove_value(&$array, $value)
+    {
+        if (($key = array_search($value, $array)) !== false) {
+            unset($array[$key]);
+        }
+    }
+}
+
 if (!function_exists('core_templates_path')) {
     /**
      * Gets the core templates path.
