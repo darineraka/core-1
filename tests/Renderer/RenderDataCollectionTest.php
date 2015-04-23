@@ -48,7 +48,7 @@ class RenderCollectionTest extends RenderTestBase
     }
 
     /**
-     * @expectedException ErrorException
+     * @expectedException Exception
      */
     public function testRenderOnlyAcceptsDataCollectors()
     {
