@@ -184,7 +184,7 @@ class FileSystemTreeGenerator implements FileTreeGenerator
         $path = $this->normalizePath($path);
 
         foreach ($this->ignoredPaths as $ignoredPath) {
-            if (Str::is($this->normalizePath($ignoredPath), $path)) {
+            if (Str::is('*'.$this->normalizePath($ignoredPath), $path)) {
                 return true;
             }
         }
@@ -203,7 +203,7 @@ class FileSystemTreeGenerator implements FileTreeGenerator
         $path = $this->normalizePath($path);
 
         foreach ($this->automaticallyRemovedPaths as $removedPath) {
-            if (Str::is($removedPath, $path)) {
+            if (Str::is('*'.$removedPath, $path)) {
                 return true;
             }
         }
