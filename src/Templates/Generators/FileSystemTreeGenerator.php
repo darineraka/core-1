@@ -3,6 +3,7 @@
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use NewUp\Contracts\IO\FileTreeGenerator;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class FileSystemTreeGenerator
@@ -107,6 +108,39 @@ class FileSystemTreeGenerator implements FileTreeGenerator
     }
 
     /**
+     * Removes all files and directories that are set to be
+     * automatically removed.
+     *
+     * @param  $destinationDirectory
+     * @return array
+     */
+    private function removeFilesAndDirectories($destinationDirectory)
+    {
+        $currentStructure = $this->fileSystem->allFiles($destinationDirectory);
+
+        $removedPaths = [];
+
+        foreach ($currentStructure as $file) {
+            /* @var SplFileInfo $file  */
+            $directoryPath = $this->normalizePath($destinationDirectory.DIRECTORY_SEPARATOR.$file->getRelativePath());
+            $fullPath = $this->normalizePath($destinationDirectory.DIRECTORY_SEPARATOR.$file->getRelativePathname());
+
+            if ($this->shouldBeRemoved($directoryPath)) {
+                $removedPaths[] = $directoryPath;
+                $this->fileSystem->deleteDirectory($directoryPath, false);
+            }
+
+            if ($this->shouldBeRemoved($fullPath)) {
+                $removedPaths[] = $fullPath;
+                $this->fileSystem->delete($fullPath);
+            }
+
+        }
+
+        return $removedPaths;
+    }
+
+    /**
      * Creates the file tree in the given directory.
      *
      * @param  $destinationDirectory
@@ -130,13 +164,11 @@ class FileSystemTreeGenerator implements FileTreeGenerator
                     touch($fullPath);
                 }
 
-                if ($this->shouldBeRemoved($path['path'])) {
-                    $this->fileSystem->delete($fullPath);
-                }
-
                 $generatedPaths[$pathKey] = ($path + ['full' => $fullPath]);
             }
         }
+
+        $this->removeFilesAndDirectories($destinationDirectory);
 
         return $generatedPaths;
     }
