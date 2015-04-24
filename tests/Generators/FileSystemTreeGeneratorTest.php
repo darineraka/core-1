@@ -14,7 +14,6 @@ class FileSystemTreeGeneratorTest extends \PHPUnit_Framework_TestCase
 
     private function getGenerator()
     {
-        $fileSystem = $this->getMock('Illuminate\Filesystem\Filesystem');
         $generator  = new FileSystemTreeGenerator($fileSystem);
 
         return $generator;
