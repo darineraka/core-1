@@ -115,6 +115,16 @@ class PathManager
     }
 
     /**
+     * Returns the FileTreeGenerator instance.
+     * 
+     * @return FileTreeGenerator
+     */
+    public function getGenerator()
+    {
+        return $this->treeGenerator;
+    }
+
+    /**
      * Adds a path to the path data collector.
      *
      * @param $path
