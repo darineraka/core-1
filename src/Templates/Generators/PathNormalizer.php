@@ -14,6 +14,8 @@ trait PathNormalizer
         $newPath = str_replace('/', DIRECTORY_SEPARATOR, $path);
         $newPath = str_replace('\\', DIRECTORY_SEPARATOR, $newPath);
 
+        $newPath = str_replace(':'.DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, '://', $newPath);
+
         return $newPath;
     }
 
