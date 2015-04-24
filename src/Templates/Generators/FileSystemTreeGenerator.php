@@ -1,7 +1,7 @@
 <?php namespace NewUp\Templates\Generators;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use NewUp\Contracts\Filesystem\Filesystem;
 use NewUp\Contracts\IO\FileTreeGenerator;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -121,9 +121,11 @@ class FileSystemTreeGenerator implements FileTreeGenerator
         $removedPaths = [];
 
         foreach ($currentStructure as $file) {
-            /* @var SplFileInfo $file  */
-            $directoryPath = $this->normalizePath($destinationDirectory.DIRECTORY_SEPARATOR.$file->getRelativePath());
-            $fullPath = $this->normalizePath($destinationDirectory.DIRECTORY_SEPARATOR.$file->getRelativePathname());
+            /* @var SplFileInfo $file */
+            $directoryPath =
+                $this->normalizePath($destinationDirectory . DIRECTORY_SEPARATOR . $file->getRelativePath());
+            $fullPath      =
+                $this->normalizePath($destinationDirectory . DIRECTORY_SEPARATOR . $file->getRelativePathname());
 
             if ($this->shouldBeRemoved($directoryPath)) {
                 $removedPaths[] = $directoryPath;
@@ -198,12 +200,12 @@ class FileSystemTreeGenerator implements FileTreeGenerator
      * @param  $path
      * @return bool
      */
-    public function shouldBeRemoved($path)
+    private function shouldBeRemoved($path)
     {
         $path = $this->normalizePath($path);
 
         foreach ($this->automaticallyRemovedPaths as $removedPath) {
-            if (Str::is($removedPath, $path)) {
+            if (Str::is($this->normalizePath($removedPath), $path)) {
                 return true;
             }
         }
