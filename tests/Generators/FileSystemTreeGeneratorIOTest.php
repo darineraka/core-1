@@ -1,12 +1,15 @@
 <?php namespace NewUp\Tests\Generators;
 
-use Illuminate\Filesystem\Filesystem;
+use NewUp\Filesystem\Filesystem;
 use NewUp\Templates\Generators\FileSystemTreeGenerator;
+use NewUp\Templates\Generators\PathNormalizer;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
 class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
 {
+
+    use PathNormalizer;
 
     /**
      * The vfsStreamDirectory instance.
@@ -62,9 +65,28 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
     public function testGeneratorIgnoresSpecificFiles()
     {
         $g = $this->getGenerator();
-        $g->addIgnoredPath('.gitignore');
+
+        $g->addIgnoredPath('*.gitignore');
+        $g->generate(vfsStream::url('fst'));
+
+        $this->assertFalse($this->vfs->hasChild('.gitignore'));
+    }
+
+    public function testGeneratorRemovesSpecificFiles()
+    {
+        $g = $this->getGenerator();
+        $g->addAutomaticallyRemovedPath('*.gitignore');
         $g->generate(vfsStream::url('fst'));
         $this->assertFalse($this->vfs->hasChild('.gitignore'));
+    }
+
+    public function testGeneratorPreservesDirectoryStructureWhenRemovingNestedFiles()
+    {
+        $g = $this->getGenerator();
+        $g->addAutomaticallyRemovedPath('*nested\file.txt');
+        $g->generate(vfsStream::url('fst'));
+        $this->assertFalse($this->vfs->hasChild('some/nested/file.txt'));
+        $this->assertTrue($this->vfs->hasChild('some/nested'));
     }
 
     public function testGeneratorIgnoresWithWildCard()
@@ -90,6 +112,11 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
                  ] as $path) {
             $this->assertTrue($this->vfs->hasChild($path));
         }
+
+    }
+
+    public function testGeneratorRemovesWithWildCard()
+    {
 
     }
 
