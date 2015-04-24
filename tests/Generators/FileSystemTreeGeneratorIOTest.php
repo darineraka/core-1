@@ -117,7 +117,11 @@ class FileSystemTreeGeneratorIOTest extends \PHPUnit_Framework_TestCase
 
     public function testGeneratorRemovesWithWildCard()
     {
-
+        $g = $this->getGenerator();
+        $g->addAutomaticallyRemovedPath('*nested*');
+        $g->generate(vfsStream::url('fst'));
+        $this->assertFalse($this->vfs->hasChild('some/nested/file.txt'));
+        $this->assertFalse($this->vfs->hasChild('some/nested'));
     }
 
     public function testFileSystemTreeGeneratorReturnsAnArrayOfTheFilesCreated()
