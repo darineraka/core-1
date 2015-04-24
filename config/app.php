@@ -19,6 +19,7 @@ return [
         /**
          * NewUp specific service providers.
          */
+        'NewUp\Filesystem\FilesystemServiceProvider',
         'NewUp\Templates\Renderers\RendererServiceProvider',
         'NewUp\Templates\Parsers\PathNameParserServiceProvider',
         'NewUp\Templates\GeneratorAnalyzerServiceProvider',
