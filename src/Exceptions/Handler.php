@@ -1,9 +1,9 @@
 <?php namespace NewUp\Exceptions;
 
 use Exception;
-use NewUp\Foundation\Exceptions\LoglessHandler as ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler as LaravelExceptionHandler;
 
-class Handler extends ExceptionHandler
+class Handler extends LaravelExceptionHandler
 {
 
     /**
@@ -12,6 +12,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
+        'Symfony\Component\HttpKernel\Exception\HttpException'
     ];
 
     /**
