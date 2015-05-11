@@ -14,6 +14,7 @@ abstract class BaseKernel extends LaravelKernel
     protected $bootstrappers = [
         'Illuminate\Foundation\Bootstrap\DetectEnvironment',
         'Illuminate\Foundation\Bootstrap\LoadConfiguration',
+        'NewUp\Foundation\Bootstrap\ConfigureLogging',
         'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
         'Illuminate\Foundation\Bootstrap\RegisterProviders',

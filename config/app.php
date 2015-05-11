@@ -6,6 +6,8 @@ return [
 
     'debug'     => true,
 
+    'log' => 'daily',
+
     'providers' => [
         /**
          * Relevant Laravel framework service providers.
