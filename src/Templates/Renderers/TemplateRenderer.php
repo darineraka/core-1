@@ -1,5 +1,6 @@
 <?php namespace NewUp\Templates\Renderers;
 
+use Illuminate\Support\Str;
 use NewUp\Contracts\DataCollector;
 use NewUp\Contracts\Templates\Filter as FilterContract;
 use NewUp\Contracts\Templates\Renderer;
@@ -65,6 +66,8 @@ class TemplateRenderer implements Renderer
      * @var array
      */
     protected $dataCollectors = [];
+
+    protected $ignoreUndefinedTemplateErrors = false;
 
     /**
      * Returns a new instance of TemplateRenderer
@@ -244,6 +247,12 @@ class TemplateRenderer implements Renderer
         } catch (\Twig_Error_Syntax $e) {
             throw new InvalidSyntaxException($e->getMessage(), $e->getCode(), $e);
         } catch (\Twig_Error_Loader $e) {
+
+            if ($this->ignoreUndefinedTemplateErrors && Str::contains($e->getMessage(), 'is not defined'))
+            {
+                return;
+            }
+
             throw new InvalidTemplateException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -269,6 +278,12 @@ class TemplateRenderer implements Renderer
         } catch (\Twig_Error_Syntax $e) {
             throw new InvalidSyntaxException($e->getMessage(), $e->getCode(), $e);
         } catch (\Twig_Error_Loader $e) {
+
+            if ($this->ignoreUndefinedTemplateErrors && Str::contains($e->getMessage(), 'is not defined'))
+            {
+                return;
+            }
+
             throw new InvalidTemplateException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -309,5 +324,14 @@ class TemplateRenderer implements Renderer
         return $collectedData;
     }
 
+    /**
+     * Sets whether or not undefined template errors will be reported.
+     *
+     * @param $doIgnore
+     */
+    public function setIgnoreUnloadedTemplateErrors($doIgnore)
+    {
+        $this->ignoreUndefinedTemplateErrors = $doIgnore;
+    }
 
 }

@@ -75,4 +75,11 @@ interface Renderer
      */
     public function collectData();
 
+    /**
+     * Sets whether or not undefined template errors will be reported.
+     *
+     * @param $doIgnore
+     */
+    public function setIgnoreUnloadedTemplateErrors($doIgnore);
+
 }
