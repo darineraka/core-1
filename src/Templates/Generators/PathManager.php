@@ -125,6 +125,16 @@ class PathManager
     }
 
     /**
+     * Returns the Renderer implementation instance.
+     * 
+     * @return Renderer
+     */
+    public function getRenderer()
+    {
+        return $this->templateRenderer;
+    }
+
+    /**
      * Adds a path to the path data collector.
      *
      * @param $path
@@ -197,6 +207,8 @@ class PathManager
             // Add the new file path association to the collector.
             $this->addRawToCollector($filePath['path'], $newPathInformation['path']);
         }
+
+        $this->templateRenderer->addPath($path);
 
         return $newPaths;
     }
