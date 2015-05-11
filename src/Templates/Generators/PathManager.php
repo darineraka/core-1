@@ -126,7 +126,7 @@ class PathManager
 
     /**
      * Returns the Renderer implementation instance.
-     * 
+     *
      * @return Renderer
      */
     public function getRenderer()
